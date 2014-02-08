@@ -1,5 +1,13 @@
 kollavarsham-java
 =================
 
-JAVA API for Kollavarsham
-Update from Eclipse
+INFO:
+=====
+JAVA API for Kollavarsham (http://kollavarsham.org)
+
+To use this source, clone this repository to local and create an Eclipse Java project from the cloned directory.
+
+USAGE:
+======
+Kollavarsham extends Java.util.Date. 
+You can create Kollavarsham using any of the standard Date Constructors
