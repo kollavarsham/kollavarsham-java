@@ -10,4 +10,6 @@ To use this source, clone this repository to local and create an Eclipse Java pr
 USAGE:
 ======
 Kollavarsham extends Java.util.Date. 
-You can create Kollavarsham using any of the standard Date Constructors
+Create Kollavarsham using any of the standard Date Constructors
+Perform Settings 
+

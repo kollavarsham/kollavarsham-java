@@ -56,7 +56,6 @@ public class Kollavarsham extends Date {
 		}
 	}
 	KollavarshamSettings settings;
-	
 	/**
 	 * @param args
 	 */
