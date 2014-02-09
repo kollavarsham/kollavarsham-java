@@ -44,8 +44,8 @@ public class math {
         return  !isNumber(result.toString()) ? 0 : result.doubleValue();
       }
 	
-	 public double truncate (Double num){
-		 return this.truncateDecimals(num, 0);
+	 public Double truncate (Double num){
+		 return (Double) this.truncateDecimals(num, 0);
 	 }
      
 	 public double floor (Double num){
