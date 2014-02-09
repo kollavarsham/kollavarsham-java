@@ -19,10 +19,17 @@ public class math {
 	}
 	
 	public boolean isInt(String str){
-		return this.isNumber(str) && (Integer.parseInt(str) % 1) == 0;
+		try {
+			int x = Integer.parseInt(str);
+		}catch (NumberFormatException nfe){
+			return false;
+		}
+		//Will reach here only if parseInt was successful
+		return true;
+		//return this.isNumber(str) && (Integer.parseInt(str) % 1) == 0;
     }
 	
-	public int truncateDecimals(Double num, int digits){
+	public double truncateDecimals(Double num, int digits){
       // Thanks Nick Knowlson! - http://stackoverflow.com/a/9232092/218882
       //     (The original from that answer has a bug though, where an integer was getting rounded to "".
       //      Caught it while getting calendar.gregorianDateToJulianDay to work. 2 hours... Phew!)
@@ -34,10 +41,10 @@ public class math {
       } else {
         result = Double.parseDouble(numS.substring(0, 1 + decPos + digits));
       }
-        return  !isNumber(result.toString()) ? 0 : result.intValue();
+        return  !isNumber(result.toString()) ? 0 : result.doubleValue();
       }
 	
-	 public int truncate (Double num){
+	 public double truncate (Double num){
 		 return this.truncateDecimals(num, 0);
 	 }
      
@@ -46,6 +53,8 @@ public class math {
 	 }
 	 
 	 public double fractional(Double num){
+		//might need to revisit for the precision
+		//based on the junit results. (Not the delta .01 set in assertEquals)
 	    double result = num % 1;
 	    return result;
 	 }
