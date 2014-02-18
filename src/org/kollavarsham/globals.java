@@ -58,7 +58,7 @@ public class globals {
 	public static final Boolean samkranti_min = true;
 	public static Double ayanadeg = 1.0;
 	public static double ayanamin = 1.0;
-	public static final int desantara = 0; // actually it is `(kollavarsham.settings.longitude - locations.Ujjain.longitude) / 360` =~ 0
+	public static Double desantara = 0.0; // actually it is `(kollavarsham.settings.longitude - locations.Ujjain.longitude) / 360` =~ 0
 	
 	public static final Boolean counter = true;
 

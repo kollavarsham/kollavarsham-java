@@ -62,7 +62,7 @@ public class calendar{
 		return 2299160 < julianDay && julianDay <= 2361221;
 	}
 	
-	public JulianDate julianDayToJulianDate(double julianDay) {
+	public date julianDayToJulianDate(double julianDay) {
     	    double j, k, l, n, i, J, I, year, month, day;
 
     	    j = mymath.truncate(julianDay) + 1402;
@@ -77,7 +77,7 @@ public class calendar{
     	    month = J + 2 - 12 * I;
     	    year = 4 * k + n + I - 4716;
 
-    	    return new JulianDate(year, month, day);
+    	    return new date(year, month, day);
     	  }
 	public Date julianDayToGregorianDate(double julianDay){
 		

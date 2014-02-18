@@ -7,11 +7,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.kollavarsham.JulianDate;
+import org.kollavarsham.date;
 
 public class TestJulianDate {
  
-	JulianDate jD;
+	date jD;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -22,7 +22,7 @@ public class TestJulianDate {
 
 	@Before
 	public void setUp() throws Exception {
-		jD = new JulianDate(2012, 12,31);
+		jD = new date(2012, 12,31);
 	}
 
 	@After
@@ -32,7 +32,7 @@ public class TestJulianDate {
 	@Test
 	public void testToString() {
 	    //assertEquals(jD.toString(), "2013 12 31");
-	    assertEquals("0001 01 01", new JulianDate(1,1,1).toString());
+	    assertEquals("0001 01 01", new date(1,1,1).toString());
 	}
 
 	@Test
