@@ -82,6 +82,17 @@ public class math {
 	public double square(double num){
 		return Math.pow(num, 2);
 	}
+	
+	public Boolean floatingPointEqual(Double n1, Double n2, Boolean test) {
+	    Boolean areEqual = Math.abs(n1 - n2) < this.epsilon;
+	    if (test == null){
+	      test = true;
+	    }
+	    if (!areEqual && test) {
+	      System.out.printf("DEBUG: math.floatingPointEqual failed for %d and %d", n1, n2);
+	    }
+	    return  areEqual;
+	  }
 
 	/**
 	 * @param args

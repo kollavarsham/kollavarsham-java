@@ -1,65 +1,89 @@
 package org.kollavarsham;
 
-public class globals {
-	public static final Boolean planet = true;
-	public static long YugaCivilDays = 1;
-	public static long YugaSynodicMonth = 1;
-	public static long YugaAdhimasa = 1;
-	public static long YugaTithi = 1;
-	public static long YugaKsayadina = 1;
-	public static final Boolean lagna = true;
+import java.util.Date;
 
-	public static Double back_clong_ahar = -1.0;
-	public static Double back_nclong_ahar = -1.0;
-	public static Double back_clong = -1.0;
-	public static Double back_nclong = -1.0;
+public class globals {
+	public final Boolean planet = true;
+	public long YugaCivilDays = 1;
+	public long YugaSynodicMonth = 1;
+	public long YugaAdhimasa = 1;
+	public long YugaTithi = 1;
+	public long YugaKsayadina = 1;
+	public final Boolean lagna = true;
+
+	public Double back_clong_ahar = -1.0;
+	public Double back_nclong_ahar = -1.0;
+	public Double back_clong = -1.0;
+	public Double back_nclong = -1.0;
+	
+	public Date gregorianDate = null; // HP
 
     //    type  paksas :(suklapaksa, krsnapaksa),
-	public static Double year = 1.0;
-	public static final Boolean month = true;
-	public static String paksa;
+	public Double year = 1.0;
+	public final Boolean month = true;
+	public String paksa;
 
 			  // (suklapaksa, krsnapaksa),
-	public static final Boolean day = true;  // {for ahargana}
-	public static final Double ahar = 1.0; // {for ahargana}
-	public static final Boolean ahargana = true;
-	public static final Boolean hours = true;
-	public static final Boolean minutes = true;
-	public static final Boolean JulianDay = true; // {for Julian days}
-	public static final Boolean YearKali = true;
-	public static final Boolean YearSaka = true;
-	public static final Boolean YearVikrama = true;
-	public static final Boolean masa_num = true;
-	public static final Boolean saura_masa_num = true;
-	public static double tithi_day = 1.0;
-	public static final Boolean mslong = true; // {solar position}
-	public static final Boolean tslong = true; // {solar position}
-	public static final Boolean mllong = true; // {lunar position}
-	public static final Boolean tllong = true; // {lunar position}
-	public static final Boolean clong = true;
-	public static final Boolean nclong = true;
-	public static final Boolean tithi = true;
-	public static double ftithi = 1.0;
-	public static final Boolean eqtime = true; // {for equation of time}
-	public static Double sriseh = 1.0;
-	public static Double srisem = 1.0;
-	public static final Boolean weekday_name = true;
-	public static String sukla_krsna;
-	public static final Boolean adhimasa = true;
-	public static final Boolean masa = true;
-	public static final Boolean naksatra = true;
+	public Boolean day = true;  // {for ahargana}
+	public Double ahar = 1.0; // {for ahargana}
+	public Double ahargana = 1.0;
+	public  Boolean hours = true;
+	public  Boolean minutes = true;
+	public double JulianDay = 1.0; // {for Julian days}
+	public double YearKali = 1.0;
+	public double YearSaka = 1.0;
+	public double YearVikrama = 1.0;
+	public Double masaNum = 1.0;
+	public String sauraMasa = "";
+	public Double sauraMasaNum = 1.0;
+	public Double sauraMasaDay = 1.0;
+	public String malayalaMasa = ""; // HP
+	public Double malayalaMasaNum = 1.0; // HP
+	public Double MalayalamYear = 1.0;
+	public String weekdayName = "";
+	public double tithi_day = 1.0;
+	public Double mslong = 1.0; // {solar position}
+	public Double tslong = 1.0; // {solar position}
+	public Double mllong = 1.0; // {lunar position}
+	public Double tllong = 1.0; // {lunar position}
+	public Double clong = 1.0;
+	public Double nclong = 1.0;
+	public Double tithi = 1.0;
+	public double ftithi = 1.0;
+	public Double eqtime = 1.0; // {for equation of time}
+	public Double sriseh = 1.0;
+	public Double srisem = 1.0;
+	public Boolean weekday_name = true;
+	public String sukla_krsna;
+	public String adhimasa = "";
+	public String masa = "";
+	public String naksatra = "";
+	public String malayalaNaksatra = "";
+
 			  // Jovian_Year_north : true,
 			  // Jovian_Year_south : true,
-	public static final Boolean samkranti = true;
-	public static final Boolean samkranti_year = true;
-	public static final Boolean samkranti_month = true;
-	public static final Boolean samkranti_day = true;
-	public static final Boolean samkranti_hour = true;
-	public static final Boolean samkranti_min = true;
-	public static Double ayanadeg = 1.0;
-	public static double ayanamin = 1.0;
-	public static Double desantara = 0.0; // actually it is `(kollavarsham.settings.longitude - locations.Ujjain.longitude) / 360` =~ 0
+	public Double samkranti = 1.0;
+	public Double samkrantiYear = 1.0;
+	public Double samkrantiMonth = 1.0;
+	public Double samkrantiDay = 1.0;
+	public Double samkrantiHour = 1.0;
+	public Double samkrantiMin = 1.0;
+
+	public Double ayanadeg = 1.0;
+	public double ayanamin = 1.0;
+	public Double desantara = 0.0; // actually it is `(kollavarsham.settings.longitude - locations.Ujjain.longitude) / 360` =~ 0
 	
-	public static final Boolean counter = true;
+	public final Boolean counter = true;
+	
+	private static globals instance = null;
+	   protected globals() {
+	      // Exists only to defeat instantiation.
+	   }
+	   public static globals getInstance() {
+	      if(instance == null) {
+	         instance = new globals();
+	      }
+	      return instance;
+	   }
 
 }
