@@ -11,12 +11,14 @@ public class calendar{
 			this.month = month;
 			this.day = day;
 		}
-		Double month;
-		Double day;
+		public Double month;
+		public Double day;
 	}
 	//This may not be required. Better to use CALENDAR.JANUARY etc...
-	public enum months {JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, 
+	public enum monthsEnum {JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, 
 		SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER};
+
+		public monthsEnum months;
 
 		public String[] masaNames = {"Caitra", "Vaisakha", "Jyaistha", "Asadha", 
 				"Sravana", "Bhadrapada", "Asvina", "Karttika", "Margasirsa","Pausa", "Magha", "Phalguna"};
@@ -40,29 +42,31 @@ public class calendar{
 		math mymath;
 		celestial myCelestial;
 		globals myGlobals;
-		calendar(){
+
+		public calendar(){
 			mymath = new math();
-			myCelestial = new celestial();
+			myCelestial = celestial.getInstance();
 			myGlobals = globals.getInstance();
 		}
 		//This function might not be required, We can use Calendar.roll()
-		public Calendar nextDate(Date date){
+		public Calendar nextDate(Calendar cal){
 			Calendar calendar = Calendar.getInstance();
-			calendar.set(date.getYear(), date.getMonth(), date.getDate());
-			calendar.roll(Calendar.DAY_OF_MONTH, 1);
+			calendar.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 
+					cal.get(Calendar.DAY_OF_MONTH));
+			calendar.roll(Calendar.DAY_OF_YEAR, 1);
 			return calendar;
 		}
 
 		//Calendar.instance generally returns a Gregorian Calender. Gregorian calendar is but one 
 		//implementation. There are other implementations and it's likely that Julian is one of them
-		public double gregorianDateToJulianDay(Date date){
+		public double gregorianDateToJulianDay(Calendar calendar){
 			//  TODO:
 			// Annotate all the magic numbers below !
 			// There is some explanation here - http://quasar.as.utexas.edu/BillInfo/JulianDatesG.html
 
-			double year = date.getYear(),
-					month = date.getMonth() + 1,
-					day = date.getDate();
+			double year = calendar.get(Calendar.YEAR),
+					month = calendar.get(Calendar.MONTH) + 1,
+					day = calendar.get(Calendar.DAY_OF_MONTH);
 
 			if (month < 3) {
 				year -= 1;
@@ -97,8 +101,8 @@ public class calendar{
 			return 2299160 < julianDay && julianDay <= 2361221;
 		}
 
-		public date julianDayToJulianDate(double julianDay) {
-			double j, k, l, n, i, J, I, year, month, day;
+		public Calendar julianDayToJulianDate(double julianDay) {
+			Double j, k, l, n, i, J, I, year, month, day;
 
 			j = mymath.truncate(julianDay) + 1402;
 			k = mymath.truncate((j - 1) / 1461);
@@ -112,9 +116,11 @@ public class calendar{
 			month = J + 2 - 12 * I;
 			year = 4 * k + n + I - 4716;
 
-			return new date(year, month, day);
+			Calendar result = Calendar.getInstance();
+			result.set(year.intValue(),  month.intValue(), day.intValue());
+			return result;
 		}
-		public Date julianDayToGregorianDate(double julianDay){
+		public Calendar julianDayToGregorianDate(double julianDay){
 
 			double a, b, c, e, f, g, h;
 			Double year, month, day;
@@ -131,7 +137,9 @@ public class calendar{
 			month = mymath.truncate(g - 12 * h + 2);
 			year = mymath.truncate(100 * (b - 49) + e + h);
 
-			Date result = new Date(year.intValue(), month.intValue() - 1, day.intValue());
+			Calendar result = Calendar.getInstance();
+
+			result.set(year.intValue(), month.intValue() - 1, day.intValue());
 			//		This might not be necessary in java Date.
 			//		if (year > 0 && year <= 99) {
 			//			result.setFullYear(year.intValue());
@@ -139,7 +147,7 @@ public class calendar{
 			return  result;
 		}
 
-		public Object julianDayToModernDate (double julianDay){
+		public Calendar julianDayToModernDate (double julianDay){
 			//return type of object is a hack. I am not sure as of now, I have only eliminated the conpile issue
 			return julianDay < 2299239 ? this.julianDayToJulianDate(julianDay) : this.julianDayToGregorianDate(julianDay);
 		}
@@ -162,6 +170,7 @@ public class calendar{
 		}
 
 		public double aharganaToKali (Double ahargana) {
+			System.out.println(myCelestial.YugaRotation.keySet());
 			return mymath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myGlobals.YugaCivilDays);
 		}
 
@@ -170,7 +179,7 @@ public class calendar{
 		}
 
 		public String  getAdhimasa (Double clong, Double nclong) {
-			return mymath.floatingPointEqual(mymath.truncate(clong / 30), mymath.truncate(nclong / 30), false) ? "Adhika-" : "";
+			return mymath.floatingPointEqual(mymath.truncate(clong / 30), mymath.truncate(nclong / 30)) ? "Adhika-" : "";
 		}
 
 		public Double getMasaNum(Double tslong, Double clong) {
@@ -191,7 +200,9 @@ public class calendar{
 			// Otherwise yesterday's + 1
 			Double month, day;
 			ahargana = mymath.truncate(ahargana);
+			System.out.println("ahargana after truncation " + ahargana);
 			if (this.isTodaySauraMasaFirst(ahargana)) {
+				System.out.println("Reached Sauramasa first");
 				day = 1.0;
 				Double tsLongTomorrow = myCelestial.getTslong(ahargana + 1);
 				month = mymath.truncate(tsLongTomorrow / 30) % 12;
@@ -223,6 +234,7 @@ public class calendar{
 			tslongTomorrow -= mymath.truncate(tslongTomorrow / 30) * 30;
 
 			if (25 < tslongToday && tslongTomorrow < 5) {
+				System.out.println("Reached the point where samkranti is set");
 				this.setSamkranti(ahargana);
 				return true;
 			}
@@ -242,8 +254,10 @@ public class calendar{
 
 			Double width = (rightAhargana - leftAhargana) / 2;
 			Double centreAhargana = (rightAhargana + leftAhargana) / 2;
+			System.out.println("Width = " + width + ", centreAhargana = " + centreAhargana);
 
 			if (width < mymath.epsilon) {
+				System.out.println("breaking from findSamkranti");
 				return centreAhargana;
 			} else {
 				Double centreTslong = myCelestial.getTslong(centreAhargana);

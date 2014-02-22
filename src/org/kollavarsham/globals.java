@@ -1,14 +1,15 @@
 package org.kollavarsham;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class globals {
 	public final Boolean planet = true;
-	public long YugaCivilDays = 1;
-	public long YugaSynodicMonth = 1;
-	public long YugaAdhimasa = 1;
-	public long YugaTithi = 1;
-	public long YugaKsayadina = 1;
+	public Double YugaCivilDays = 1.0;
+	public Double YugaSynodicMonth = 1.0;
+	public Double YugaAdhimasa = 1.0;
+	public Double YugaTithi = 1.0;
+	public Double YugaKsayadina = 1.0;
 	public final Boolean lagna = true;
 
 	public Double back_clong_ahar = -1.0;
@@ -16,12 +17,13 @@ public class globals {
 	public Double back_clong = -1.0;
 	public Double back_nclong = -1.0;
 	
-	public Date gregorianDate = null; // HP
+	public Calendar gregorianDate = null; // HP
 
     //    type  paksas :(suklapaksa, krsnapaksa),
 	public Double year = 1.0;
 	public final Boolean month = true;
 	public String paksa;
+	public Double tithiDay;
 
 			  // (suklapaksa, krsnapaksa),
 	public Boolean day = true;  // {for ahargana}

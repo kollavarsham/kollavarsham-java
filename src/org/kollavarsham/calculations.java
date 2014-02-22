@@ -17,7 +17,7 @@ public class calculations {
 
 	calculations(){
 		myCalendar = new calendar();
-		myCelestial = new celestial();
+		myCelestial = celestial.getInstance();
 		myGlobals = globals.getInstance();
 		myMath = new math();
 	}
@@ -121,6 +121,7 @@ public class calculations {
 			myCelestial.PlanetTruePosition.put(planets[i], myCelestial.getTrueLongitude(myGlobals.ahar, myGlobals.mslong, planets[i]));
 		}
 	}
+	
 	/**
 	 * @param args
 	 */

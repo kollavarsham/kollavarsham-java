@@ -16,7 +16,7 @@ public class celestial {
 	Map primaryYugaRotationConstants;
 	Map planetNames;
 	math kvmath;
-	Map YugaRotation;
+	public Map YugaRotation;
 	Map PlanetRotation;
 	Map PlanetSighra;
 	Map PlanetApogee;
@@ -26,20 +26,28 @@ public class celestial {
 	Map PlanetTruePosition;
 	globals myGlobals;
 	
+	private static celestial instance = null;
 
-	celestial(){
+	   public static celestial getInstance() {
+	      if(instance == null) {
+	         instance = new celestial();
+	      }
+	      return instance;
+	   }
+
+	protected celestial(){
 		myGlobals = globals.getInstance();
-		primaryYugaRotationConstants = new HashMap<String, Long>();
-		primaryYugaRotationConstants.put("star", 1582237800);
-		primaryYugaRotationConstants.put("sun", 4320000);
-		primaryYugaRotationConstants.put("moon", 57753336);
-		primaryYugaRotationConstants.put("mercury", 17937000);
-		primaryYugaRotationConstants.put("venus", 7022388);
-		primaryYugaRotationConstants.put("mars", 2296824);
-		primaryYugaRotationConstants.put("jupiter", 364220);
-		primaryYugaRotationConstants.put("saturn", 146564);
-		primaryYugaRotationConstants.put("Candrocca", 488219);
-		primaryYugaRotationConstants.put("Rahu", -232226);
+		primaryYugaRotationConstants = new HashMap<String, Double>();
+		primaryYugaRotationConstants.put("star", 1582237800.0);
+		primaryYugaRotationConstants.put("sun", 4320000.0);
+		primaryYugaRotationConstants.put("moon", 57753336.0);
+		primaryYugaRotationConstants.put("mercury", 17937000.0);
+		primaryYugaRotationConstants.put("venus", 7022388.0);
+		primaryYugaRotationConstants.put("mars", 2296824.0);
+		primaryYugaRotationConstants.put("jupiter", 364220.0);
+		primaryYugaRotationConstants.put("saturn", 146564.0);
+		primaryYugaRotationConstants.put("Candrocca", 488219.0);
+		primaryYugaRotationConstants.put("Rahu", -232226.0);
 
 		planetNames = new HashMap<String, String>();
 		planetNames.put("star", "Star        ");
@@ -52,14 +60,15 @@ public class celestial {
 		planetNames.put("saturn", "Saturn      ");
 		planetNames.put("Candrocca", "Candrocca   ");
 		planetNames.put("Rahu", "Rahu        ");
-		YugaRotation = new HashMap<String, Long>();
-		PlanetRotation = new HashMap<String, Long>();
-		PlanetSighra = new HashMap<String, Long>();
-		PlanetApogee = new HashMap<String, Long>();
-		PlanetCircumm = new HashMap<String, Long>();
-		PlanetCircums = new HashMap<String, Long>();
+		YugaRotation = new HashMap<String, Double>();
+		PlanetRotation = new HashMap<String, Double>();
+		PlanetSighra = new HashMap<String, Double>();
+		PlanetApogee = new HashMap<String, Double>();
+		PlanetCircumm = new HashMap<String, Double>();
+		PlanetCircums = new HashMap<String, Double>();
 		PlanetMeanPosition = new HashMap<String, Double>();
 		PlanetTruePosition = new HashMap<String, Double>();
+		kvmath = new math();
 		
 	}
 
@@ -78,45 +87,50 @@ public class celestial {
 	}
 
 	public void setPrimaryConstants(){
-		this.YugaRotation = primaryYugaRotationConstants;
+		//System.out.println("primary yuga rotation constants key set " + 
+	//primaryYugaRotationConstants.keySet() );
+		this.YugaRotation.putAll(primaryYugaRotationConstants);
+		//System.out.println("yuga rotation constants key set " + 
+			//	this.YugaRotation.keySet() );
+		//this.YugaRotation = primaryYugaRotationConstants;
 	}
 
 
 	public void applyBija() {
-		Long star = (Long) this.YugaRotation.get("star");
+		Double star = (Double) this.YugaRotation.get("star");
 		this.YugaRotation.put("star", star + 28);
 		//this.YugaRotation.sun = this.YugaRotation.sun;  // reduntant line - kept for consistency
 		//this.YugaRotation.moon = this.YugaRotation.moon;  // reduntant line - kept for consistency
-		Long mercury = (Long) this.YugaRotation.get("mercury");
+		Double mercury = (Double) this.YugaRotation.get("mercury");
 		this.YugaRotation.put("mercury", mercury + 60);
 
-		Long venus = (Long) this.YugaRotation.get("venus");
+		Double venus = (Double) this.YugaRotation.get("venus");
 		this.YugaRotation.put("venus", venus - 12);
 
-		Long mars = (Long) this.YugaRotation.get("mars");
+		Double mars = (Double) this.YugaRotation.get("mars");
 		this.YugaRotation.put("mars", mars + 8);
 
 		//this.YugaRotation.jupiter = this.YugaRotation.jupiter;  // reduntant line - kept for consistency
 
-		Long saturn = (Long) this.YugaRotation.get("saturn");
+		Double saturn = (Double) this.YugaRotation.get("saturn");
 		this.YugaRotation.put("saturn", saturn + 4);
 
-		Long Candrocca = (Long) this.YugaRotation.get("Candrocca");
+		Double Candrocca = (Double) this.YugaRotation.get("Candrocca");
 		this.YugaRotation.put("Candrocca", Candrocca - 16);
 
-		Long Rahu = (Long) this.YugaRotation.get("Rahu");
+		Double Rahu = (Double) this.YugaRotation.get("Rahu");
 		this.YugaRotation.put("Rahu", Rahu - 12);
 
 	}
 
 	public void setSecondaryConstants() {
 		// TODO: Add Tests if/when feasible
-		myGlobals.YugaCivilDays = (Long) this.YugaRotation.get("star") - 
-				(Long) this.YugaRotation.get("sun");
-		myGlobals.YugaSynodicMonth = (Long) this.YugaRotation.get("moon") - 
-				(Long) this.YugaRotation.get("sun");
+		myGlobals.YugaCivilDays = (Double) this.YugaRotation.get("star") - 
+				(Double) this.YugaRotation.get("sun");
+		myGlobals.YugaSynodicMonth = (Double) this.YugaRotation.get("moon") - 
+				(Double) this.YugaRotation.get("sun");
 		myGlobals.YugaAdhimasa = myGlobals.YugaSynodicMonth - 
-				12 * (Long) this.YugaRotation.get("sun");
+				12 * (Double) this.YugaRotation.get("sun");
 		myGlobals.YugaTithi = 30 * myGlobals.YugaSynodicMonth;
 		myGlobals.YugaKsayadina = myGlobals.YugaTithi - myGlobals.YugaCivilDays;
 	}
@@ -126,70 +140,70 @@ public class celestial {
 		// star
 		this.PlanetRotation.put("star", 0);
 		this.PlanetSighra.put("star", 0);
-		this.PlanetApogee.put("star", 0);
-		this.PlanetCircumm.put("star", 0);
+		this.PlanetApogee.put("star", 0.0);
+		this.PlanetCircumm.put("star", 0.0);
 		this.PlanetCircums.put("star", 0);
 
 		// sun
-		this.PlanetRotation.put("sun", (Long) this.YugaRotation.get("sun"));
-		this.PlanetSighra.put("sun", (Long) this.YugaRotation.get("sun"));
-		this.PlanetApogee.put("sun", 77 + 17 / 60);
-		this.PlanetCircumm.put("sun", 13 + 50 / 60);
+		this.PlanetRotation.put("sun", this.YugaRotation.get("sun"));
+		this.PlanetSighra.put("sun", this.YugaRotation.get("sun"));
+		this.PlanetApogee.put("sun", 77.0 + 17.0 / 60.0);
+		this.PlanetCircumm.put("sun", 13.0 + 50 / 60);
 		this.PlanetCircums.put("sun", 0);
 
 		// moon
 		this.PlanetRotation.put("moon", this.YugaRotation.get("moon"));
 		this.PlanetSighra.put("moon", 0);
-		this.PlanetApogee.put("moon", 0);
-		this.PlanetCircumm.put("moon", 31 + 50 / 60);
+		this.PlanetApogee.put("moon", 0.0);
+		this.PlanetCircumm.put("moon", 31.0 + 50 / 60);
 		this.PlanetCircums.put("moon", 0);
 
 		// mercury
 		this.PlanetRotation.put("mercury", this.YugaRotation.get("sun"));;
 		this.PlanetSighra.put("mercury", this.YugaRotation.get("mercury"));
-		this.PlanetApogee.put("mercury", 220 + 27 / 60);
-		this.PlanetCircumm.put("mercury", 29);
+		this.PlanetApogee.put("mercury", 220.0 + 27.0 / 60.0);
+		this.PlanetCircumm.put("mercury", 29.0);
 		this.PlanetCircums.put("mercury", 131.5);
 
 		// venus
 		this.PlanetRotation.put("venus", this.YugaRotation.get("sun"));
 		this.PlanetSighra.put("venus", this.YugaRotation.get("venus"));
-		this.PlanetApogee.put("venus", 79 + 50 / 60);
+		this.PlanetApogee.put("venus", 79.0 + 50.0 / 60.0);
 		this.PlanetCircumm.put("venus", 11.5);
 		this.PlanetCircums.put("venus", 261);
 
 		// mars
 		this.PlanetRotation.put("mars", this.YugaRotation.get("mars"));
 		this.PlanetSighra.put("mars", this.YugaRotation.get("sun"));
-		this.PlanetApogee.put("mars", 130 + 2 / 60);
+		this.PlanetApogee.put("mars", 130.0 + 2.0 / 60.0);
 		this.PlanetCircumm.put("mars", 73.5);
 		this.PlanetCircums.put("mars", 233.5);
 
 		// jupiter
 		this.PlanetRotation.put("jupiter",this.YugaRotation.get("jupiter"));
 		this.PlanetSighra.put("jupiter", this.YugaRotation.get("sun"));
-		this.PlanetApogee.put("jupiter", 171 + 18 / 60);
+		this.PlanetApogee.put("jupiter", 171.0 + 18.0 / 60.0);
 		this.PlanetCircumm.put("jupiter", 32.5);
 		this.PlanetCircums.put("jupiter", 71);
 
 		// saturn
 		this.PlanetRotation.put("saturn", this.YugaRotation.get("saturn"));
 		this.PlanetSighra.put("saturn", this.YugaRotation.get("sun"));
-		this.PlanetApogee.put("saturn", 236 + 37 / 60);
+		this.PlanetApogee.put("saturn", 236.0 + 37.0 / 60.0);
 		this.PlanetCircumm.put("saturn", 48.5);
 		this.PlanetCircums.put("saturn", 39.5);
 
 		// Candrocca
 		this.PlanetRotation.put("Candrocca", this.YugaRotation.get("Candrocca"));
 		this.PlanetSighra.put("Candrocca", 0);
-		this.PlanetApogee.put("Candrocca", 0);
+		this.PlanetApogee.put("Candrocca", 0.0);
 		this.PlanetCircumm.put("Candrocca", 0);
 		this.PlanetCircums.put("Candrocca", 0);
 
 		// Rahu
 		this.PlanetRotation.put("Rahu", this.YugaRotation.get("Rahu"));
 		this.PlanetSighra.put("Rahu", 0);
-		this.PlanetApogee.put("Rahu", 0);
+		this.PlanetApogee.put("Rahu", 0.0);
 		this.PlanetCircumm.put("Rahu", 0);
 		this.PlanetCircums.put("Rahu", 0);
 	} 
@@ -285,8 +299,13 @@ public class celestial {
 		myGlobals.srisem = kvmath.truncate(60 * kvmath.fractional(sunriseTime));
 	}
 	public Double getMandaEquation (Double argument, String planet) {
-		return Math.asin((Double) this.PlanetCircumm.get("planet") / 360 * Math.sin(argument / kvmath.radianMultiplier)) * kvmath.radianMultiplier;
+		//System.out.println("planet circumm keyset " + this.PlanetCircumm.keySet());
+		return Math.asin((Double) this.PlanetCircumm.get(planet) / 
+				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
+				kvmath.radianMultiplier;
 	}
+	//    return Math.asin(this.PlanetCircumm[planet] / 360 * Math.sin(argument / math.radianInDegrees)) * math.radianInDegrees;
+
 
 	public Double getTithi (Double tllong, Double tslong) {
 		Double elong = tllong - tslong;
