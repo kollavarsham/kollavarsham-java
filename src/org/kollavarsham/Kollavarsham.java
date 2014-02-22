@@ -2,69 +2,92 @@
  * kollavarsham
  * http://kollavarsham.org
  *
- * Copyright (c) 2014 Floyd Pink & akutty
+ * Copyright (c) 2014 The Kollavarsham Team
  * Licensed under the MIT license.
  */
 
 package org.kollavarsham;
 
-import java.util.Date;
+import java.util.Calendar;
 
 //This is the main class for the Kollavarsham API
 //Extending this from java.util.Date to reuse certain functionalities from that.
 //That will make available all the APIs of the 'modern' Date API
 
-public class Kollavarsham extends Date {
-	public enum outputFormat {verbose, list};
-	class KollavarshamSettings {
-		//These are the defaults
-	    Boolean bija = false;
-	    short mode = 0;
-	    double latitude = 23.2;
-	    double longitude = 75.8;
-	    outputFormat output = outputFormat.verbose;
-	    
-		public Boolean getBija() {
-			return bija;
-		}
-		public void setBija(Boolean bija) {
-			this.bija = bija;
-		}
-		public short getMode() {
-			return mode;
-		}
-		public void setMode(short mode) {
-			this.mode = mode;
-		}
-		public double getLatitude() {
-			return latitude;
-		}
-		public void setLatitude(double latitude) {
-			this.latitude = latitude;
-		}
-		public double getLongitude() {
-			return longitude;
-		}
-		public void setLongitude(double longitude) {
-			this.longitude = longitude;
-		}
-		public outputFormat getOutput() {
-			return output;
-		}
-		public void setOutput(outputFormat output) {
-			this.output = output;
-		}
-	}
-	KollavarshamSettings settings;
+public class Kollavarsham{
 	/**
-	 * @param args
+	 * 
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Kollavarsham malayalamYear = new Kollavarsham();
-		System.out.println("The date is " + malayalamYear.getTime());
 
+	globals myGlobals;
+	calculations Calculations;
+
+	public static final int MALAYALAM_YEAR = 1;
+	public static final int MALAYALAM_MONTH_NUM = 2;
+	public static final int MALAYALAM_DAY_OF_MONTH = 3;
+
+	Boolean bija = false;
+	double latitude = 23.2;
+	double longitude = 75.8;
+
+	String MalayalamNakshatram;
+	Double MalayalamYear;
+	String MalayalamMonth;
+	Calendar modernDate;
+
+
+	public Kollavarsham() {
+		myGlobals = globals.getInstance();
+		Calculations = new calculations();
+		modernDate = Calendar.getInstance();
 	}
+
+	public void setModernDate(Calendar modernDate) {
+		this.modernDate = modernDate;
+	}
+
+	public void setOptions(Boolean bija, Double latitude, Double longitude){
+		this.bija = bija;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
+	public void FromGregorian(){
+		Calculations._setConstants(this.bija);
+		Calculations.FromGregorian(this.bija, this.latitude, this.modernDate);
+		MalayalamNakshatram = myGlobals.malayalaNaksatra;
+		MalayalamYear = myGlobals.MalayalamYear;
+		MalayalamMonth = myGlobals.malayalaMasa;	
+	}
+
+	public String getMalayalamNakshatram() {
+		return MalayalamNakshatram;
+	}
+
+	public Double getMalayalamYear() {
+		return MalayalamYear;
+	}
+
+	public String getMalayalamMonthNum() {
+		return MalayalamMonth;
+	}
+
+/**
+ * @param args
+ */
+public static void main(String[] args) {
+	// Test Only
+	Kollavarsham malayalamYear = new Kollavarsham();
+	Calendar modernDate = Calendar.getInstance();
+	modernDate.set(2011, Calendar.APRIL, 4);
+	malayalamYear.setModernDate(modernDate);
+	malayalamYear.setOptions(true, 23.2, 75.8);
+	malayalamYear.FromGregorian();
+	System.out.println("Converted to Malayalam Calendar with the following details:");
+	System.out.println("Malayalam Year  :" + malayalamYear.getMalayalamYear());
+	System.out.println("Malayalam Month :" + malayalamYear.getMalayalamMonthNum());
+	System.out.println("Nakshatram : " + malayalamYear.getMalayalamNakshatram());
+}
 
 }
 

@@ -10,18 +10,16 @@ jars for download and ant build scripts will be added soon.
 
 ## Usage
 
-#### As library/module
-
 ```
-Kollavarsham kollavarsham = new Kollavarsham(Calendar ModernDate);
-kollavarsham.setOptions(Boolean bija, Double latitude, Double longitude);
-kollavarsham.FromGregorian();
-kollavarsham.get(int field);
-where field is:
-Kollavarsham.MALAYALAM_YEAR;
-Kollavarsham.MALAYALAM_MONTH_NUM;
-Kollavarsham.MALAYALAM_DAY_OF_MONTH;
-Kollavarsham.MALAYALAM_NAKSHATRAM;
+	Kollavarsham malayalamYear = new Kollavarsham();
+	Calendar modernDate = Calendar.getInstance();
+	modernDate.set(2011, Calendar.APRIL, 4);
+	malayalamYear.setModernDate(modernDate);
+	malayalamYear.setOptions(true, 23.2, 75.8);
+	malayalamYear.FromGregorian();
+	malayalamYear.getMalayalamYear();
+	malayalamYear.getMalayalamMonthNum();
+	malayalamYear.getMalayalamNakshatram();
 ```
 
 ## Documentation
