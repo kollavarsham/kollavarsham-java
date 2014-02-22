@@ -6,13 +6,19 @@ import java.util.Date;
 public class calendar{
 
 	public class SauraMasaMonthDay{
-		public SauraMasaMonthDay(Double month2, Double day2) {
-			// TODO Auto-generated constructor stub
-			this.month = month;
-			this.day = day;
-		}
 		public Double month;
 		public Double day;
+		public SauraMasaMonthDay(Double month2, Double day2) {
+			// TODO Auto-generated constructor stub
+			this.month = month2;
+			this.day = day2;
+		}
+		public SauraMasaMonthDay() {
+			// TODO Auto-generated constructor stub
+			this.month=1.0;
+			this.day=1.0;
+		}
+
 	}
 	//This may not be required. Better to use CALENDAR.JANUARY etc...
 	public enum monthsEnum {JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, 
@@ -201,18 +207,23 @@ public class calendar{
 			Double month, day;
 			ahargana = mymath.truncate(ahargana);
 			System.out.println("ahargana after truncation " + ahargana);
+			SauraMasaMonthDay sauraMasaMonthDay = new SauraMasaMonthDay();
 			if (this.isTodaySauraMasaFirst(ahargana)) {
 				System.out.println("Reached Sauramasa first");
 				day = 1.0;
 				Double tsLongTomorrow = myCelestial.getTslong(ahargana + 1);
+				System.out.println("tsLongTomorrow = " + tsLongTomorrow);
 				month = mymath.truncate(tsLongTomorrow / 30) % 12;
+				System.out.println("month after truncation = " + month);
 				month = (month + 12) % 12;
+				System.out.println("month after abs = " + month);
 			} else {
-				SauraMasaMonthDay sauraMasaMonthDay = this.getSauraMasaMonthDay(ahargana - 1);
+				sauraMasaMonthDay = this.getSauraMasaMonthDay(ahargana - 1);
 				month = sauraMasaMonthDay.month;
 				day = sauraMasaMonthDay.day + 1;
 			}
 			SauraMasaMonthDay sMonthDay = new SauraMasaMonthDay(month, day);
+			System.out.println("sMonthDay " + sMonthDay.day);
 			return sMonthDay;
 		}
 
@@ -277,9 +288,9 @@ public class calendar{
 				myGlobals.samkrantiMonth = ((date) samkrantiModernDate).getMonth();
 				myGlobals.samkrantiDay = ((date) samkrantiModernDate).getDay();
 			} else {
-				myGlobals.samkrantiYear = (double) ((Date) samkrantiModernDate).getYear();
-				myGlobals.samkrantiMonth = (double) (((Date) samkrantiModernDate).getMonth() + 1);
-				myGlobals.samkrantiDay = (double) ((Date) samkrantiModernDate).getDate();
+				myGlobals.samkrantiYear = (double) ((Calendar) samkrantiModernDate).get(Calendar.YEAR);
+				myGlobals.samkrantiMonth = (double) ((Calendar) samkrantiModernDate).get(Calendar.MONTH) + 1;
+				myGlobals.samkrantiDay = (double) ((Calendar) samkrantiModernDate).get(Calendar.DAY_OF_MONTH);
 			}
 			Double fractionalDay = mymath.fractional(myGlobals.samkranti) * 24;
 			myGlobals.samkrantiHour = mymath.truncate(fractionalDay);

@@ -268,8 +268,8 @@ public class celestial {
 	
 	public Double getSighraEquation( Double anomaly, String planet) {
 		    Double bhuja, koti, karna;
-		    bhuja = (Double) this.PlanetCircums.get(planet) / 360 * Math.sin(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
-		    koti = (Double) this.PlanetCircums.get(planet) / 360 * Math.cos(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
+		    bhuja = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.sin(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
+		    koti = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.cos(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
 		    karna = Math.sqrt(kvmath.square(kvmath.radianMultiplier + koti) + kvmath.square(bhuja));
 
 		    return Math.asin(bhuja / karna) * kvmath.radianMultiplier;
@@ -299,7 +299,13 @@ public class celestial {
 		myGlobals.srisem = kvmath.truncate(60 * kvmath.fractional(sunriseTime));
 	}
 	public Double getMandaEquation (Double argument, String planet) {
-		//System.out.println("planet circumm keyset " + this.PlanetCircumm.keySet());
+		System.out.println("planet circumm keyset " + this.PlanetCircumm.keySet());
+		System.out.println("planet circumm for planet : " + planet + " : " + 
+		this.PlanetCircumm.get(planet));
+		Double testVal = Math.asin((Double) this.PlanetCircumm.get(planet) / 
+				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
+				kvmath.radianMultiplier;
+		System.out.println("Calculating Manda " + testVal);
 		return Math.asin((Double) this.PlanetCircumm.get(planet) / 
 				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
 				kvmath.radianMultiplier;
@@ -333,8 +339,12 @@ public class celestial {
 		return this.zero360(meanLunarLongitude - this.getMandaEquation((meanLunarLongitude - apogee), "moon"));
 	}
 	public Double getTslong( Double ahar) {
+		System.out.println("Calling getMeanLongitude with args ahar =  " + ahar);
 		Double meanSolarLongitude = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("sun"));
-		return this.zero360(meanSolarLongitude - this.getMandaEquation((meanSolarLongitude - (Double) this.PlanetApogee.get("sun")), "sun"));
+		System.out.println("Calling zero360 with args meanSolarLongitude =  " + meanSolarLongitude);
+		Double TsLong = this.zero360(meanSolarLongitude - this.getMandaEquation((meanSolarLongitude - (Double) this.PlanetApogee.get("sun")), "sun"));
+		System.out.println("zero360 returns " + TsLong);
+		return TsLong;
 	}
 	public Double getElong(Double ahar) {
 		Double elong = Math.abs(this.getTllong(ahar) - this.getTslong(ahar));

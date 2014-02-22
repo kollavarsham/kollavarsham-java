@@ -7,7 +7,7 @@ import java.text.ParsePosition;
 public class math {
 
 	double epsilon = 1E-8;
-	double radianMultiplier = 180/Math.PI;
+	double radianMultiplier = 180.0/Math.PI;
 	
 	public boolean isNumber(String str){
 	 //the nodejs port one does an isFinite() check as well.

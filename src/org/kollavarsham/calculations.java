@@ -1,5 +1,7 @@
 package org.kollavarsham;
 
+import java.util.Calendar;
+
 /*
  * kollavarsham
  * http://kollavarsham.org
@@ -15,7 +17,7 @@ public class calculations {
 	globals myGlobals;
 	math myMath;
 
-	calculations(){
+	public calculations(){
 		myCalendar = new calendar();
 		myCelestial = celestial.getInstance();
 		myGlobals = globals.getInstance();
@@ -32,12 +34,17 @@ public class calculations {
 		myCelestial.setPlanetaryConstants();
 	};
 
-	public void main(Boolean bija, Double latitude){
+	public void FromGregorian(Boolean bija, Double latitude, Calendar gregorianDate){
+		//Java port 
+		//Settings will come from the global instance of this application where we would have provided the set APIs for it
+		//For now I am going to use the hardcoded values for the settings bija and latitude that is going to be used in this method
+		bija = true;
+		latitude = 23.2;
 		// TODO: Add Tests if/when feasible
 		_setConstants(bija);
 		// This is how it is done in Perl - we use the new gregorianDate global
 		//globals.JulianDay = calendar.gregorianDateToJulianDay(new Date(globals.year, globals.month - 1, globals.day));
-		myGlobals.JulianDay = myCalendar.gregorianDateToJulianDay(myGlobals.gregorianDate);
+		myGlobals.JulianDay = myCalendar.gregorianDateToJulianDay(gregorianDate);
 		myGlobals.ahar = myCalendar.julianDayToAhargana(myGlobals.JulianDay);
 		myGlobals.JulianDay = myMath.truncate(myGlobals.JulianDay + 0.5);
 		myGlobals.ahargana = myMath.truncate(myGlobals.ahar + 0.5);
@@ -112,15 +119,20 @@ public class calculations {
 		myGlobals.MalayalamYear = myGlobals.YearSaka - 747 +
 				myMath.truncate((myGlobals.sauraMasaNum - myGlobals.malayalaMasaNum + 12) / 12);
 		//myGlobals.MEYear = myGlobals.;
-	}
-
-	public void planetary() {
+	
 		String[] planets = {"mercury", "venus", "mars", "jupiter", "saturn"};
 		for (int i = 0; i < planets.length; i++) {
 			myCelestial.PlanetMeanPosition.put(planets[i], myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.PlanetRotation.get(planets[i])));
 			myCelestial.PlanetTruePosition.put(planets[i], myCelestial.getTrueLongitude(myGlobals.ahar, myGlobals.mslong, planets[i]));
+			
+		    //return new KollavarshamDate(malayalamYear, sauraMasaNum, sauraMasaDay);
+			System.out.println("malayalam Year : " + myGlobals.MalayalamYear);
+			System.out.println("Malayalam Masam   : " + myGlobals.malayalaMasa);
+			System.out.println("Malayalam star : " + myGlobals.malayalaNaksatra);
 		}
+		
 	}
+	
 	
 	/**
 	 * @param args
