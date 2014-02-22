@@ -21,7 +21,7 @@ public class celestial {
 	Map PlanetSighra;
 	Map PlanetApogee;
 	Map PlanetCircumm;
-	Map PlanetCircums;
+	Map <String, Double> PlanetCircums;
 	Map PlanetMeanPosition;
 	Map PlanetTruePosition;
 	globals myGlobals;
@@ -138,25 +138,25 @@ public class celestial {
 	public void setPlanetaryConstants() {
 		// TODO: Add Tests if/when feasible
 		// star
-		this.PlanetRotation.put("star", 0);
-		this.PlanetSighra.put("star", 0);
+		this.PlanetRotation.put("star", 0.0);
+		this.PlanetSighra.put("star", 0.0);
 		this.PlanetApogee.put("star", 0.0);
 		this.PlanetCircumm.put("star", 0.0);
-		this.PlanetCircums.put("star", 0);
+		this.PlanetCircums.put("star", 0.0);
 
 		// sun
 		this.PlanetRotation.put("sun", this.YugaRotation.get("sun"));
 		this.PlanetSighra.put("sun", this.YugaRotation.get("sun"));
 		this.PlanetApogee.put("sun", 77.0 + 17.0 / 60.0);
 		this.PlanetCircumm.put("sun", 13.0 + 50 / 60);
-		this.PlanetCircums.put("sun", 0);
+		this.PlanetCircums.put("sun", 0.0);
 
 		// moon
 		this.PlanetRotation.put("moon", this.YugaRotation.get("moon"));
 		this.PlanetSighra.put("moon", 0);
 		this.PlanetApogee.put("moon", 0.0);
 		this.PlanetCircumm.put("moon", 31.0 + 50 / 60);
-		this.PlanetCircums.put("moon", 0);
+		this.PlanetCircums.put("moon", 0.0);
 
 		// mercury
 		this.PlanetRotation.put("mercury", this.YugaRotation.get("sun"));;
@@ -170,7 +170,7 @@ public class celestial {
 		this.PlanetSighra.put("venus", this.YugaRotation.get("venus"));
 		this.PlanetApogee.put("venus", 79.0 + 50.0 / 60.0);
 		this.PlanetCircumm.put("venus", 11.5);
-		this.PlanetCircums.put("venus", 261);
+		this.PlanetCircums.put("venus", 261.0);
 
 		// mars
 		this.PlanetRotation.put("mars", this.YugaRotation.get("mars"));
@@ -184,7 +184,7 @@ public class celestial {
 		this.PlanetSighra.put("jupiter", this.YugaRotation.get("sun"));
 		this.PlanetApogee.put("jupiter", 171.0 + 18.0 / 60.0);
 		this.PlanetCircumm.put("jupiter", 32.5);
-		this.PlanetCircums.put("jupiter", 71);
+		this.PlanetCircums.put("jupiter", 71.0);
 
 		// saturn
 		this.PlanetRotation.put("saturn", this.YugaRotation.get("saturn"));
@@ -195,17 +195,17 @@ public class celestial {
 
 		// Candrocca
 		this.PlanetRotation.put("Candrocca", this.YugaRotation.get("Candrocca"));
-		this.PlanetSighra.put("Candrocca", 0);
+		this.PlanetSighra.put("Candrocca", 0.0);
 		this.PlanetApogee.put("Candrocca", 0.0);
-		this.PlanetCircumm.put("Candrocca", 0);
-		this.PlanetCircums.put("Candrocca", 0);
+		this.PlanetCircumm.put("Candrocca", 0.0);
+		this.PlanetCircums.put("Candrocca", 0.0);
 
 		// Rahu
 		this.PlanetRotation.put("Rahu", this.YugaRotation.get("Rahu"));
-		this.PlanetSighra.put("Rahu", 0);
+		this.PlanetSighra.put("Rahu", 0.0);
 		this.PlanetApogee.put("Rahu", 0.0);
-		this.PlanetCircumm.put("Rahu", 0);
-		this.PlanetCircums.put("Rahu", 0);
+		this.PlanetCircumm.put("Rahu", 0.0);
+		this.PlanetCircums.put("Rahu", 0.0);
 	} 
 	public void setAyanamsa(Double ahargana){
 		// TODO: Add Tests if/when feasible
@@ -268,7 +268,7 @@ public class celestial {
 	
 	public Double getSighraEquation( Double anomaly, String planet) {
 		    Double bhuja, koti, karna;
-		    bhuja = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.sin(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
+		    bhuja = this.PlanetCircums.get(planet) / 360.0 * Math.sin(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
 		    koti = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.cos(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
 		    karna = Math.sqrt(kvmath.square(kvmath.radianMultiplier + koti) + kvmath.square(bhuja));
 

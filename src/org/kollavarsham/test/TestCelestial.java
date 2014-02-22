@@ -84,9 +84,9 @@ public class TestCelestial {
 
 	@Test
 	public void testGetTrueLongitude() {
-		Calendar dhanyaBday = Calendar.getInstance();
-		dhanyaBday.set(1981, Calendar.FEBRUARY, 6);
-		kvcalculations.FromGregorian(true, 23.2, dhanyaBday);
+		Calendar testDay = Calendar.getInstance();
+		testDay.set(1981, Calendar.FEBRUARY, 6);
+		kvcalculations.FromGregorian(true, 23.2, testDay);
 		assertTrue(kvmath.floatingPointEqual(kvcelestial.getTrueLongitude(1710693.0, 215.330481398828, "mercury"), 290.256193246842));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTrueLongitude(1710694.0, 216.345092245966, "mercury"), 287.939466847665));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTrueLongitude(1710695.0, 217.360117559963, "mercury"), 285.69872602331));
