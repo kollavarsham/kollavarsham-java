@@ -78,7 +78,7 @@ public class math {
 	}
 	
 	public double square(double num){
-		return Math.pow(num, 2);
+		return Math.pow(num, 2.0);
 	}
 	
 	public Boolean floatingPointEqual(Double n1, Double n2) {

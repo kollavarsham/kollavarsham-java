@@ -73,8 +73,8 @@ public class celestial {
 	}
 
 	public Double zero360(Double longitude) {
-		Double result = longitude - kvmath.truncate(longitude/360)*360;
-		return result < 0 ? 360 + result : result;
+		Double result = longitude - kvmath.truncate(longitude/360.0)*360.0;
+		return result < 0 ? 360.0 + result : result;
 	}
 
 	public Double threeRelation (Double leftY, Double centreY, Double rightY){
@@ -227,7 +227,7 @@ public class celestial {
 	    Double equation1, equation2, equation3, equation4, equation5;
 
 	    // first sighra correction
-	    if (planet == "mercury" || planet == "venus") {
+	    if (planet.equals("mercury") || planet.equals("venus")) {
 	      anomaly1 = this.getMeanLongitude(ahargana, (Double) this.PlanetSighra.get(planet)) - meanSolarLongitude;
 	    }
 	    else {
@@ -241,7 +241,7 @@ public class celestial {
 	    equation2 = this.getMandaEquation(argument, planet);
 
 	    // second manda correction
-	    meanLong2 = meanLong1 - equation2 / 2;
+	    meanLong2 = meanLong1 - equation2 / 2.0;
 	    argument = meanLong2 - (Double) this.PlanetApogee.get(planet);
 	    equation3 = this.getMandaEquation(argument, planet);
 
@@ -268,15 +268,24 @@ public class celestial {
 	
 	public Double getSighraEquation( Double anomaly, String planet) {
 		    Double bhuja, koti, karna;
-		    bhuja = this.PlanetCircums.get(planet) / 360.0 * Math.sin(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
+		    bhuja = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.sin(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
 		    koti = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.cos(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
 		    karna = Math.sqrt(kvmath.square(kvmath.radianMultiplier + koti) + kvmath.square(bhuja));
 
 		    return Math.asin(bhuja / karna) * kvmath.radianMultiplier;
     }
+	
+//	  getSighraEquation     : function (anomaly, planet) {
+//        var bhuja, koti, karna;
+//        bhuja = this.PlanetCircums[planet] / 360 * Math.sin(anomaly / math.radianInDegrees) * math.radianInDegrees;
+//        koti = this.PlanetCircums[planet] / 360 * Math.cos(anomaly / math.radianInDegrees) * math.radianInDegrees;
+//        karna = Math.sqrt(math.square(math.radianInDegrees + koti) + math.square(bhuja));
+//
+//        return Math.asin(bhuja / karna) * math.radianInDegrees;
+//      }
 	public Double declination (Double longitude) {
 		// https://en.wikipedia.org/wiki/Declination
-		return Math.asin(Math.sin(longitude / kvmath.radianMultiplier) * Math.sin(24 / kvmath.radianMultiplier)) *
+		return Math.asin(Math.sin(longitude / kvmath.radianMultiplier) * Math.sin(24.0 / kvmath.radianMultiplier)) *
 				kvmath.radianMultiplier;
 	}
 	public Double getDaylightEquation (Double year, Double latitude) {
@@ -284,7 +293,7 @@ public class celestial {
 		Double meanSolarLongitude = this.getMeanLongitude(myGlobals.ahar, (Double) this.YugaRotation.get("sun"));
 
 		// Sayana Solar Longitude and Declination
-		Double sayanaMeanSolarLongitude = meanSolarLongitude + (54.0 / 3600.0) * (myGlobals.year - 499);
+		Double sayanaMeanSolarLongitude = meanSolarLongitude + (54.0 / 3600.0) * (myGlobals.year - 499.0);
 		Double sayanaDeclination = this.declination(sayanaMeanSolarLongitude); // See Sewell, p.10
 
 		// Equation of day light by Analemma (https://en.wikipedia.org/wiki/Analemma)
@@ -312,7 +321,7 @@ public class celestial {
 //		System.out.println("test val1 :" + testVal1);
 //		System.out.println("test val1 :" + testVal1);
 		return Math.asin((Double) this.PlanetCircumm.get(planet) / 
-				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
+				360.0 * Math.sin(argument / kvmath.radianMultiplier)) * 
 				kvmath.radianMultiplier;
 		
 		//    return Math.asin(this.PlanetCircumm[planet] / 360 * Math.sin(argument / math.radianInDegrees)) * math.radianInDegrees;
@@ -324,11 +333,13 @@ public class celestial {
 		elong = this.zero360(elong);
 		return elong / 12.0;
 	}
+	
 	public void setTithiSet(Double tithi) {
 		// TODO: Add Tests if/when feasible
 		myGlobals.tithi_day = kvmath.truncate(tithi) + 1;
 		myGlobals.ftithi = kvmath.fractional(tithi);
 	}
+	
 	public void  setSuklaKrsna() {
 		// TODO: Add Tests if/when feasible
 		if (15 < myGlobals.tithi_day) {
@@ -339,15 +350,22 @@ public class celestial {
 		}
 		myGlobals.sukla_krsna = myGlobals.paksa;
 	}
+	
 	public Double getTllong(Double ahar) {
 		System.out.println("getTllong::Args passed - ahar :" + ahar);
 		System.out.println("yugarotation of moon :" + this.YugaRotation.get("moon"));
 		Double meanLunarLongitude = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("moon"));
 		System.out.println("meanlunarlongitude calculated: " + meanLunarLongitude);
 		System.out.println("yugarotation of candrocca :" + this.YugaRotation.get("Candrocca"));
-		Double apogee = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("Candrocca") + 90.0);
+		Double apogee = (this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("Candrocca")) + 90.0);
 		return this.zero360(meanLunarLongitude - this.getMandaEquation((meanLunarLongitude - apogee), "moon"));
 	}
+	
+//	  getTllong             : function (ahar) {
+//	    var meanLunarLongitude = this.getMeanLongitude(ahar, this.YugaRotation.moon);
+//	    var apogee = this.getMeanLongitude(ahar, this.YugaRotation.Candrocca) + 90;
+//	    return this.zero360(meanLunarLongitude - this.getMandaEquation((meanLunarLongitude - apogee), 'moon'));
+//	  }
     //return 360 * math.fractional(rotation * ahargana / globals.YugaCivilDays);
 
 	public Double getTslong( Double ahar) {
@@ -358,6 +376,7 @@ public class celestial {
 		//System.out.println("zero360 returns " + TsLong);
 		return TsLong;
 	}
+	
 	public Double getElong(Double ahar) {
 		Double elong = Math.abs(this.getTllong(ahar) - this.getTslong(ahar));
 		if (180 < elong) {
@@ -365,6 +384,7 @@ public class celestial {
 		}
 		return elong;
 	}
+	
 	public Double findConj(Double leftX, Double leftY, Double rightX, Double rightY) {
 		Double width = (rightX - leftX) / 2;
 		Double centreX = (rightX + leftX) / 2;
@@ -382,20 +402,21 @@ public class celestial {
 				leftY = this.getElong(leftX);
 				return this.findConj(leftX, leftY, centreX, centreY);
 			} else {
-				leftX += width / 2;
+				leftX += width / 2.0;
 				leftY = this.getElong(leftX);
-				rightX -= width / 2;
+				rightX -= width / 2.0;
 				rightY = this.getElong(rightX);
 				return this.findConj(leftX, leftY, rightX, rightY);
 			}
 		}
 	}
+	
 	public Double getConj(Double ahar) {
-		return this.findConj(ahar - 2, this.getElong(ahar - 2), ahar + 2, this.getElong(ahar + 2));
+		return this.findConj(ahar - 2.0, this.getElong(ahar - 2.0), ahar + 2.0, this.getElong(ahar + 2.0));
 	}
 	public Double getClong(Double ahar, Double tithi) {
 		Double newNew = myGlobals.YugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
-		ahar -= tithi * (newNew / 30);
+		ahar -= tithi * (newNew / 30.0);
 
 		if (Math.abs(ahar - myGlobals.back_clong_ahar) < 1) {
 			return (double) myGlobals.back_clong;
@@ -411,7 +432,7 @@ public class celestial {
 	}
 	public double getNclong(Double ahar, Double tithi) {
 		Double newNew = myGlobals.YugaCivilDays / ( (Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
-		ahar += (30 - tithi) * (newNew / 30);
+		ahar += (30.0 - tithi) * (newNew / 30.0);
 
 		if (Math.abs(ahar - myGlobals.back_nclong_ahar) < 1) {
 			return myGlobals.back_nclong;

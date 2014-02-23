@@ -35,10 +35,11 @@ public class calculations {
 	};
 
 	public void FromGregorian(Boolean bija, Double latitude, Calendar gregorianDate){
+		System.out.println("Passed date :" + gregorianDate.getTime());
 		//Java port 
 		//Settings will come from the global instance of this application where we would have provided the set APIs for it
 		//For now I am going to use the hardcoded values for the settings bija and latitude that is going to be used in this method
-		bija = true;
+		bija = false;
 		latitude = 23.2;
 		// TODO: Add Tests if/when feasible
 		_setConstants(bija);
@@ -49,6 +50,7 @@ public class calculations {
 		myGlobals.JulianDay = myMath.truncate(myGlobals.JulianDay + 0.5);
 		myGlobals.ahargana = myMath.truncate(myGlobals.ahar + 0.5);
 		myGlobals.weekdayName = myCalendar.julianDayToWeekday(myGlobals.JulianDay);
+		myGlobals.year = (double) gregorianDate.get(Calendar.YEAR);
 		myCelestial.setAyanamsa(myGlobals.ahargana);
 
 		// at 6 o'clock
@@ -63,7 +65,7 @@ public class calculations {
 		myCelestial.setSunriseTime(myGlobals.eqtime);
 
 		// Lunar apogee and node at sunrise
-		myCelestial.PlanetMeanPosition.put("Candrocca", myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("Candrocca")) + 90);
+		myCelestial.PlanetMeanPosition.put("Candrocca", (Double) myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("Candrocca")) + 90);
 		myCelestial.PlanetMeanPosition.put("Candrocca", myCelestial.zero360( (Double) myCelestial.PlanetMeanPosition.get("Candrocca")));
 
 		myCelestial.PlanetMeanPosition.put("Rahu", myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("Rahu")) + 180);
