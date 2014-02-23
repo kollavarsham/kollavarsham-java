@@ -1,6 +1,7 @@
 package org.kollavarsham;
 
 import java.lang.Math;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 
@@ -12,7 +13,7 @@ public class math {
 	public boolean isNumber(String str){
 	 //the nodejs port one does an isFinite() check as well.
 	 //The exclusion of that may cause issues
-		System.out.println("String to isNumber : " + str);
+		//System.out.println("String to isNumber : " + str);
 	  NumberFormat formatter = NumberFormat.getInstance();
 	  ParsePosition pos = new ParsePosition(0);
 	  formatter.parse(str, pos);
@@ -30,28 +31,19 @@ public class math {
 		//return this.isNumber(str) && (Integer.parseInt(str) % 1) == 0;
     }
 	
-	public Double truncateDecimals(Double num, int digits){
-      // Thanks Nick Knowlson! - http://stackoverflow.com/a/9232092/218882
-      //     (The original from that answer has a bug though, where an integer was getting rounded to "".
-      //      Caught it while getting calendar.gregorianDateToJulianDay to work. 2 hours... Phew!)
-//      String numS = num.toString();
-//      int decPos = numS.indexOf('.');
-        Double result = 0.0;
-//      if (decPos == -1){
-//    	result = num;
-//      } else {
-//        result = Double.parseDouble(numS.substring(0, 1 + decPos + digits));
-//      }
-//        return  !isNumber(result.toString()) ? 0 : result.doubleValue();
-		//!!! HACK!!!!!!
-		String truncated = num.intValue() + ".0";
-		//System.out.println("truncated is " + truncated);
-		return Double.valueOf(truncated);
-
-      }
+	public Double truncateDecimals(double x,int numberofDecimals)
+	{
+		BigDecimal truncated;
+	    if ( x > 0) {
+	        truncated = new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_FLOOR);
+	    } else {
+	        truncated = new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
+	    }
+	    return truncated.doubleValue();
+	}
 	
 	 public Double truncate (Double num){
-		 return (Double) this.truncateDecimals(num, 0);
+		 return this.truncateDecimals(num, 0);
 	 }
      
 	 public double floor (Double num){
@@ -90,10 +82,8 @@ public class math {
 	}
 	
 	public Boolean floatingPointEqual(Double n1, Double n2) {
-		System.out.println("n1 is  " + n1 + ", n2 is " + n2);
-		System.out.println("abs = " + Math.abs(n1 - n2));
+		System.out.println("n1 is : " + n1 + ", n2 is :" + n2);
 	    Boolean areEqual = Math.abs(n1 - n2) < this.epsilon;
-
 	    return  areEqual;
 	  }
 

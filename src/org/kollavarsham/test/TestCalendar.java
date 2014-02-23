@@ -47,8 +47,6 @@ public class TestCalendar {
 		if (one.getTime().toString().equals(two.getTime().toString())){
 			return true;
 		}
-		System.out.println("one is " + one.getTime().toString());
-		System.out.println("two is " + two.getTime().toString());
 		return false;
 	}
 	
@@ -215,60 +213,69 @@ public class TestCalendar {
 	}
 
 	@Test
-	public void testGetAdhimasa() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetMasaNum() {
-		fail("Not yet implemented");
+		assertEquals(kvcal.getMasaNum(31.3101877453024, 190.002232417937), 1, 0);
+	    assertEquals(kvcal.getMasaNum(42.2597957259723, 209.07961889886), 1, 0);
+	    assertEquals(kvcal.getMasaNum(59.2349729472294, 183.469749507872), 1, 0);
+	    assertEquals(kvcal.getMasaNum(62.5975972349908, 208.58681756282), 2, 0);
+	    assertEquals(kvcal.getMasaNum(80.4818781723799, 180.203508055438), 2, 0);
+	    assertEquals(kvcal.getMasaNum(121.1497130809087, 208.340416894636), 4, 0);
+	    assertEquals(kvcal.getMasaNum(320.8687779979979, 195.735990965544), 10, 0);
+	    assertEquals(kvcal.getMasaNum(131.3101877453024, 10.002232417937), 4, 0);
+	    assertEquals(kvcal.getMasaNum(242.2597957259723, 9.07961889886), 8, 0);
+	    assertEquals(kvcal.getMasaNum(359.2349729472294, 83.469749507872), 11, 0);
+	    assertEquals(kvcal.getMasaNum(62.5975972349908, 108.58681756282), 2, 0);
+	    assertEquals(kvcal.getMasaNum(280.4818781723799, 180.203508055438), 9, 0);
+	    assertEquals(kvcal.getMasaNum(21.1497130809087, 108.340416894636), 0, 0);
+	    assertEquals(kvcal.getMasaNum(20.8687779979979, 286.735990965544), 0, 0);
 	}
 
 	@Test
 	public void testGetMasaName() {
-		fail("Not yet implemented");
+		assertEquals(kvcal.getMasaName(0.0), "Caitra");
+	    assertEquals(kvcal.getMasaName(1.0), "Vaisakha");
+	    assertEquals(kvcal.getMasaName(2.0), "Jyaistha");
+	    assertEquals(kvcal.getMasaName(3.0), "Asadha");
+	    assertEquals(kvcal.getMasaName(4.0), "Sravana");
+	    assertEquals(kvcal.getMasaName(5.0), "Bhadrapada");
+	    assertEquals(kvcal.getMasaName(6.0), "Asvina");
+	    assertEquals(kvcal.getMasaName(7.0), "Karttika");
+	    assertEquals(kvcal.getMasaName(8.0), "Margasirsa");
+	    assertEquals(kvcal.getMasaName(9.0), "Pausa");
+	    assertEquals(kvcal.getMasaName(10.0), "Magha");
+	    assertEquals(kvcal.getMasaName(11.0), "Phalguna");
 	}
 
 	@Test
 	public void testGetSauraMasaMonthDay() {
 	    assertEquals(kvcal.getSauraMasaMonthDay(2299158.5).month, 7, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2299159.5).month, 7, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2299160.5).month, 7, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2299161.5).month, 7, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2361220.5).month, 6, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2361221.5).month, 6, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2361222.5).month, 6, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(1721457.5).month, 11, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2456656.5).month, 9, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2456657.5).month, 9, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2455957.5).month, 10, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2456351.5).month, 11, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2455985.5).month, 11, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2433313.5).month, 10, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2299158.5).day, 6, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2299159.5).day, 7, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2299160.5).day, 8, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2299161.5).day, 9, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2361220.5).day, 4, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2361221.5).day, 5, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2361222.5).day, 6, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(1721457.5).day, 27, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2456656.5).day, 19, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2456657.5).day, 20, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2455957.5).day, 21, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2456351.5).day, 20, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2455985.5).day, 19, 0);
-//	    assertEquals(kvcal.getSauraMasaMonthDay(2433313.5).day, 23, 0);
-	}
-
-	@Test
-	public void testGetSauraMasaName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsTodaySauraMasaFirst() {
-		fail("Not yet implemented");
+	    assertEquals(kvcal.getSauraMasaMonthDay(2299159.5).month, 7, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2299160.5).month, 7, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2299161.5).month, 7, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2361220.5).month, 6, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2361221.5).month, 6, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2361222.5).month, 6, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(1721457.5).month, 11, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2456656.5).month, 9, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2456657.5).month, 9, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2455957.5).month, 10, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2456351.5).month, 11, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2455985.5).month, 11, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2433313.5).month, 10, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2299158.5).day, 6, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2299159.5).day, 7, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2299160.5).day, 8, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2299161.5).day, 9, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2361220.5).day, 4, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2361221.5).day, 5, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2361222.5).day, 6, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(1721457.5).day, 27, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2456656.5).day, 19, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2456657.5).day, 20, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2455957.5).day, 21, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2456351.5).day, 20, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2455985.5).day, 19, 0);
+	    assertEquals(kvcal.getSauraMasaMonthDay(2433313.5).day, 23, 0);
 	}
 
 	@Test
@@ -278,31 +285,7 @@ public class TestCalendar {
 //	    assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(1868266.0, 1868267.0), 1868266.00000001));
 //	    assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(1721431.0, 1721432.0), 1721431.9425787));
 //	    assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(2299153.0, 2299154.0), 2299153.23922039));
-	}
 
-	@Test
-	public void testSetSamkranti() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMalayalaMasaName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNaksatraName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMalayalaNaksatraName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMain() {
-		fail("Not yet implemented");
 	}
 
 }

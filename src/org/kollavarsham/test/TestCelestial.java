@@ -60,11 +60,6 @@ public class TestCelestial {
 	}
 
 	@Test
-	public void testSetAyanamsa() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetMeanLongitude() {
 		assertTrue(kvmath.floatingPointEqual(kvcelestial.getMeanLongitude(1868236.15634155, 4320000.0), 298.54776362783));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getMeanLongitude(1868236.15637207, 4320000.0), 298.547793708385));
@@ -86,7 +81,7 @@ public class TestCelestial {
 	public void testGetTrueLongitude() {
 		Calendar testDay = Calendar.getInstance();
 		testDay.set(2014, Calendar.FEBRUARY, 11);
-		kvcalculations.FromGregorian(true, 23.2, testDay);
+		kvcalculations.FromGregorian(false, 23.2, testDay);
 		assertTrue(kvmath.floatingPointEqual(kvcelestial.getTrueLongitude(1710693.0, 215.330481398828, "mercury"), 290.256193246842));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTrueLongitude(1710694.0, 216.345092245966, "mercury"), 287.939466847665));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTrueLongitude(1710695.0, 217.360117559963, "mercury"), 285.69872602331));
@@ -160,11 +155,6 @@ public class TestCelestial {
 	}
 
 	@Test
-	public void testGetSighraEquation() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testDeclination() {
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.declination(31.3101877453024), 12.2026059914001));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.declination(42.2597957259723), 15.8742931864835));
@@ -173,16 +163,6 @@ public class TestCelestial {
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.declination(80.4818781723799), 23.6492922420057));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.declination(121.1497130809087), 20.3707052985127));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.declination(320.8687779979979), -14.8738036439391));
-	}
-
-	@Test
-	public void testGetDaylightEquation() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSunriseTime() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -244,11 +224,6 @@ public class TestCelestial {
 	}
 
 	@Test
-	public void testSetSuklaKrsna() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetTllong() {
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTllong(2299158.5), 167.084587116821));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTllong(2299159.5), 179.618866280373));
@@ -282,36 +257,6 @@ public class TestCelestial {
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTslong(2456351.5), 348.803993428264));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTslong(2455985.5), 348.072902270539));
 	    assertTrue(kvmath.floatingPointEqual(kvcelestial.getTslong(2433313.5), 322.249740952942));
-	}
-
-	@Test
-	public void testGetElong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindConj() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetConj() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetClong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNclong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMain() {
-		fail("Not yet implemented");
 	}
 
 }

@@ -13,17 +13,17 @@ import java.util.Map;
 
 public class celestial {
 
-	Map primaryYugaRotationConstants;
-	Map planetNames;
+	Map <String, Double> primaryYugaRotationConstants;
+	Map <String, String> planetNames;
 	math kvmath;
-	public Map YugaRotation;
-	Map PlanetRotation;
-	Map PlanetSighra;
-	Map PlanetApogee;
-	Map PlanetCircumm;
+	public Map <String, Double> YugaRotation;
+	Map <String, Double> PlanetRotation;
+	Map <String, Double> PlanetSighra;
+	Map <String, Double> PlanetApogee;
+	Map <String, Double> PlanetCircumm;
 	Map <String, Double> PlanetCircums;
-	Map PlanetMeanPosition;
-	Map PlanetTruePosition;
+	Map <String, Double> PlanetMeanPosition;
+	Map <String, Double> PlanetTruePosition;
 	globals myGlobals;
 	
 	private static celestial instance = null;
@@ -98,28 +98,28 @@ public class celestial {
 
 	public void applyBija() {
 		Double star = (Double) this.YugaRotation.get("star");
-		this.YugaRotation.put("star", star + 28);
+		this.YugaRotation.put("star", star + 28.0);
 		//this.YugaRotation.sun = this.YugaRotation.sun;  // reduntant line - kept for consistency
 		//this.YugaRotation.moon = this.YugaRotation.moon;  // reduntant line - kept for consistency
 		Double mercury = (Double) this.YugaRotation.get("mercury");
-		this.YugaRotation.put("mercury", mercury + 60);
+		this.YugaRotation.put("mercury", mercury + 60.0);
 
 		Double venus = (Double) this.YugaRotation.get("venus");
-		this.YugaRotation.put("venus", venus - 12);
+		this.YugaRotation.put("venus", venus - 12.0);
 
 		Double mars = (Double) this.YugaRotation.get("mars");
-		this.YugaRotation.put("mars", mars + 8);
+		this.YugaRotation.put("mars", mars + 8.0);
 
 		//this.YugaRotation.jupiter = this.YugaRotation.jupiter;  // reduntant line - kept for consistency
 
 		Double saturn = (Double) this.YugaRotation.get("saturn");
-		this.YugaRotation.put("saturn", saturn + 4);
+		this.YugaRotation.put("saturn", saturn + 4.0);
 
 		Double Candrocca = (Double) this.YugaRotation.get("Candrocca");
-		this.YugaRotation.put("Candrocca", Candrocca - 16);
+		this.YugaRotation.put("Candrocca", Candrocca - 16.0);
 
 		Double Rahu = (Double) this.YugaRotation.get("Rahu");
-		this.YugaRotation.put("Rahu", Rahu - 12);
+		this.YugaRotation.put("Rahu", Rahu - 12.0);
 
 	}
 
@@ -130,8 +130,8 @@ public class celestial {
 		myGlobals.YugaSynodicMonth = (Double) this.YugaRotation.get("moon") - 
 				(Double) this.YugaRotation.get("sun");
 		myGlobals.YugaAdhimasa = myGlobals.YugaSynodicMonth - 
-				12 * (Double) this.YugaRotation.get("sun");
-		myGlobals.YugaTithi = 30 * myGlobals.YugaSynodicMonth;
+				12.0 * (Double) this.YugaRotation.get("sun");
+		myGlobals.YugaTithi = 30.0 * myGlobals.YugaSynodicMonth;
 		myGlobals.YugaKsayadina = myGlobals.YugaTithi - myGlobals.YugaCivilDays;
 	}
 
@@ -148,14 +148,14 @@ public class celestial {
 		this.PlanetRotation.put("sun", this.YugaRotation.get("sun"));
 		this.PlanetSighra.put("sun", this.YugaRotation.get("sun"));
 		this.PlanetApogee.put("sun", 77.0 + 17.0 / 60.0);
-		this.PlanetCircumm.put("sun", 13.0 + 50 / 60);
+		this.PlanetCircumm.put("sun", 13.0 + 50.0 / 60.0);
 		this.PlanetCircums.put("sun", 0.0);
 
 		// moon
 		this.PlanetRotation.put("moon", this.YugaRotation.get("moon"));
-		this.PlanetSighra.put("moon", 0);
+		this.PlanetSighra.put("moon", 0.0);
 		this.PlanetApogee.put("moon", 0.0);
-		this.PlanetCircumm.put("moon", 31.0 + 50 / 60);
+		this.PlanetCircumm.put("moon", 31.0 + 50.0 / 60.0);
 		this.PlanetCircums.put("moon", 0.0);
 
 		// mercury
@@ -212,13 +212,13 @@ public class celestial {
 		// Good reads:
 		// https://en.wikipedia.org/wiki/Ayanamsa
 		// http://pidaparthypanchangam.com/?m=201306&paged=2
-		Double ayanamsa = ( 54 * 4320000 / myGlobals.YugaCivilDays / 3600 ) * ( ahargana - 1314930 );
+		Double ayanamsa = ( 54.0 * 4320000.0 / myGlobals.YugaCivilDays / 3600.0 ) * ( ahargana - 1314930.0 );
 		myGlobals.ayanadeg = kvmath.truncate(ayanamsa);
-		myGlobals.ayanamin = 60 * kvmath.fractional(ayanamsa);
+		myGlobals.ayanamin = 60.0 * kvmath.fractional(ayanamsa);
 	}
 	public Double getMeanLongitude (Double ahargana, Double rotation) {
 		// TODO: Add Tests if/when feasible
-		return 360 * kvmath.fractional(rotation * ahargana / myGlobals.YugaCivilDays);
+		return 360.0 * kvmath.fractional(rotation * ahargana / myGlobals.YugaCivilDays);
 	}
 	public Double getTrueLongitude(Double ahargana, Double meanSolarLongitude, String planet) {
 	    Double meanLong1, meanLong2, meanLong3;
@@ -236,7 +236,7 @@ public class celestial {
 	    equation1 = this.getSighraEquation(anomaly1, planet);
 
 	    // first manda correction
-	    meanLong1 = (Double) this.PlanetMeanPosition.get(planet) + equation1 / 2;
+	    meanLong1 = (Double) this.PlanetMeanPosition.get(planet) + equation1 / 2.0;
 	    argument = meanLong1 - (Double) this.PlanetApogee.get(planet);
 	    equation2 = this.getMandaEquation(argument, planet);
 
@@ -284,7 +284,7 @@ public class celestial {
 		Double meanSolarLongitude = this.getMeanLongitude(myGlobals.ahar, (Double) this.YugaRotation.get("sun"));
 
 		// Sayana Solar Longitude and Declination
-		Double sayanaMeanSolarLongitude = meanSolarLongitude + (54 / 3600) * (myGlobals.year - 499);
+		Double sayanaMeanSolarLongitude = meanSolarLongitude + (54.0 / 3600.0) * (myGlobals.year - 499);
 		Double sayanaDeclination = this.declination(sayanaMeanSolarLongitude); // See Sewell, p.10
 
 		// Equation of day light by Analemma (https://en.wikipedia.org/wiki/Analemma)
@@ -294,29 +294,35 @@ public class celestial {
 	}
 	public void setSunriseTime(Double eqTime) {
 		// TODO: Add Tests if/when feasible
-		Double sunriseTime = (0.25 - eqTime) * 24;
+		Double sunriseTime = (0.25 - eqTime) * 24.0;
 		myGlobals.sriseh = kvmath.truncate(sunriseTime);
-		myGlobals.srisem = kvmath.truncate(60 * kvmath.fractional(sunriseTime));
+		myGlobals.srisem = kvmath.truncate(60.0 * kvmath.fractional(sunriseTime));
 	}
 	public Double getMandaEquation (Double argument, String planet) {
-		System.out.println("planet circumm keyset " + this.PlanetCircumm.keySet());
-		System.out.println("planet circumm for planet : " + planet + " : " + 
-		this.PlanetCircumm.get(planet));
-		Double testVal = Math.asin((Double) this.PlanetCircumm.get(planet) / 
-				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
-				kvmath.radianMultiplier;
-		System.out.println("Calculating Manda " + testVal);
+		System.out.println("Args to getMandaEquation " + argument + ", " + planet);
+//		Double testVal1 = (Double) this.PlanetCircumm.get(planet) / 360;
+//		Double testVal2 = argument/kvmath.radianMultiplier;
+//		Double testVal3 = Math.sin(testVal2);
+//				
+//				Math.asin((Double) this.PlanetCircumm.get(planet) / 
+//				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
+//				kvmath.radianMultiplier;
+//		
+//		System.out.println("test val1 :" + testVal1);
+//		System.out.println("test val1 :" + testVal1);
+//		System.out.println("test val1 :" + testVal1);
 		return Math.asin((Double) this.PlanetCircumm.get(planet) / 
 				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
 				kvmath.radianMultiplier;
-	}
-	//    return Math.asin(this.PlanetCircumm[planet] / 360 * Math.sin(argument / math.radianInDegrees)) * math.radianInDegrees;
+		
+		//    return Math.asin(this.PlanetCircumm[planet] / 360 * Math.sin(argument / math.radianInDegrees)) * math.radianInDegrees;
 
+	}
 
 	public Double getTithi (Double tllong, Double tslong) {
 		Double elong = tllong - tslong;
 		elong = this.zero360(elong);
-		return elong / 12;
+		return elong / 12.0;
 	}
 	public void setTithiSet(Double tithi) {
 		// TODO: Add Tests if/when feasible
@@ -326,7 +332,7 @@ public class celestial {
 	public void  setSuklaKrsna() {
 		// TODO: Add Tests if/when feasible
 		if (15 < myGlobals.tithi_day) {
-			myGlobals.tithi_day -= 15;
+			myGlobals.tithi_day -= 15.0;
 			myGlobals.paksa = "Krsnapaksa";
 		} else {
 			myGlobals.paksa = "Suklapaksa";
@@ -334,22 +340,28 @@ public class celestial {
 		myGlobals.sukla_krsna = myGlobals.paksa;
 	}
 	public Double getTllong(Double ahar) {
+		System.out.println("getTllong::Args passed - ahar :" + ahar);
+		System.out.println("yugarotation of moon :" + this.YugaRotation.get("moon"));
 		Double meanLunarLongitude = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("moon"));
-		Double apogee = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("Candrocca") + 90);
+		System.out.println("meanlunarlongitude calculated: " + meanLunarLongitude);
+		System.out.println("yugarotation of candrocca :" + this.YugaRotation.get("Candrocca"));
+		Double apogee = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("Candrocca") + 90.0);
 		return this.zero360(meanLunarLongitude - this.getMandaEquation((meanLunarLongitude - apogee), "moon"));
 	}
+    //return 360 * math.fractional(rotation * ahargana / globals.YugaCivilDays);
+
 	public Double getTslong( Double ahar) {
-		System.out.println("Calling getMeanLongitude with args ahar =  " + ahar);
+		//System.out.println("Calling getMeanLongitude with args ahar =  " + ahar);
 		Double meanSolarLongitude = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("sun"));
-		System.out.println("Calling zero360 with args meanSolarLongitude =  " + meanSolarLongitude);
+		//System.out.println("Calling zero360 with args meanSolarLongitude =  " + meanSolarLongitude);
 		Double TsLong = this.zero360(meanSolarLongitude - this.getMandaEquation((meanSolarLongitude - (Double) this.PlanetApogee.get("sun")), "sun"));
-		System.out.println("zero360 returns " + TsLong);
+		//System.out.println("zero360 returns " + TsLong);
 		return TsLong;
 	}
 	public Double getElong(Double ahar) {
 		Double elong = Math.abs(this.getTllong(ahar) - this.getTslong(ahar));
 		if (180 < elong) {
-			elong = 360 - elong;
+			elong = 360.0 - elong;
 		}
 		return elong;
 	}

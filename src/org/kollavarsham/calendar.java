@@ -176,7 +176,6 @@ public class calendar{
 		}
 
 		public double aharganaToKali (Double ahargana) {
-			System.out.println(myCelestial.YugaRotation.keySet());
 			return mymath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myGlobals.YugaCivilDays);
 		}
 
@@ -206,24 +205,18 @@ public class calendar{
 			// Otherwise yesterday's + 1
 			Double month, day;
 			ahargana = mymath.truncate(ahargana);
-			System.out.println("ahargana after truncation " + ahargana);
 			SauraMasaMonthDay sauraMasaMonthDay = new SauraMasaMonthDay();
 			if (this.isTodaySauraMasaFirst(ahargana)) {
-				System.out.println("Reached Sauramasa first");
 				day = 1.0;
 				Double tsLongTomorrow = myCelestial.getTslong(ahargana + 1);
-				System.out.println("tsLongTomorrow = " + tsLongTomorrow);
 				month = mymath.truncate(tsLongTomorrow / 30) % 12;
-				System.out.println("month after truncation = " + month);
 				month = (month + 12) % 12;
-				System.out.println("month after abs = " + month);
 			} else {
 				sauraMasaMonthDay = this.getSauraMasaMonthDay(ahargana - 1);
 				month = sauraMasaMonthDay.month;
 				day = sauraMasaMonthDay.day + 1;
 			}
 			SauraMasaMonthDay sMonthDay = new SauraMasaMonthDay(month, day);
-			System.out.println("sMonthDay " + sMonthDay.day);
 			return sMonthDay;
 		}
 
@@ -245,7 +238,6 @@ public class calendar{
 			tslongTomorrow -= mymath.truncate(tslongTomorrow / 30) * 30;
 
 			if (25 < tslongToday && tslongTomorrow < 5) {
-				System.out.println("Reached the point where samkranti is set");
 				this.setSamkranti(ahargana);
 				return true;
 			}
@@ -265,10 +257,8 @@ public class calendar{
 
 			Double width = (rightAhargana - leftAhargana) / 2;
 			Double centreAhargana = (rightAhargana + leftAhargana) / 2;
-			System.out.println("Width = " + width + ", centreAhargana = " + centreAhargana);
 
 			if (width < mymath.epsilon) {
-				System.out.println("breaking from findSamkranti");
 				return centreAhargana;
 			} else {
 				Double centreTslong = myCelestial.getTslong(centreAhargana);

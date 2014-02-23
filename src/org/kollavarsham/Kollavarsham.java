@@ -79,7 +79,7 @@ public static void main(String[] args) {
 	// Test Only
 	Kollavarsham malayalamYear = new Kollavarsham();
 	Calendar modernDate = Calendar.getInstance();
-	modernDate.set(2011, Calendar.APRIL, 4);
+	modernDate.set(1985, Calendar.NOVEMBER, 20);
 	malayalamYear.setModernDate(modernDate);
 	malayalamYear.setOptions(true, 23.2, 75.8);
 	malayalamYear.FromGregorian();
