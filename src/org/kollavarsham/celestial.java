@@ -395,7 +395,7 @@ public class celestial {
         Double width = (rightX - leftX) / 2;
         Double centreX = (rightX + leftX) / 2;
         if (width < kvmath.epsilon) {
-            return this.getElong(centreX);
+            return this.getTslong(centreX);
         } else {
             Double centreY = this.getElong(centreX);
             Double relation = this.threeRelation(leftY, centreY, rightY);

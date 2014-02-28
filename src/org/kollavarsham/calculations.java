@@ -78,11 +78,11 @@ public class calculations {
         myCelestial.PlanetMeanPosition.put("sun", myGlobals.mslong);
         myGlobals.tslong = myCelestial.zero360(myGlobals.mslong -
                 myCelestial.getMandaEquation((myGlobals.mslong - (Double) myCelestial.PlanetApogee.get("sun")), "sun"));
-        myCelestial.PlanetMeanPosition.put("sun", myGlobals.tslong);
+        myCelestial.PlanetTruePosition.put("sun", myGlobals.tslong);
 
         // mean and true moon at sunrise
         myGlobals.mllong = myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("moon"));
-        myCelestial.YugaRotation.put("moon", myGlobals.mllong);
+        myCelestial.PlanetMeanPosition.put("moon", myGlobals.mllong);
         myCelestial.PlanetApogee.put("moon", myCelestial.PlanetMeanPosition.get("Candrocca"));
         myGlobals.tllong = myCelestial.zero360(myGlobals.mllong -
                 myCelestial.getMandaEquation((myGlobals.mllong - (Double) myCelestial.PlanetApogee.get("moon")), "moon"));
