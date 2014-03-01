@@ -87,12 +87,7 @@ public class celestial {
     }
 
     public void setPrimaryConstants() {
-        //System.out.println("primary yuga rotation constants key set " +
-        //primaryYugaRotationConstants.keySet() );
         this.YugaRotation.putAll(primaryYugaRotationConstants);
-        //System.out.println("yuga rotation constants key set " +
-        //	this.YugaRotation.keySet() );
-        //this.YugaRotation = primaryYugaRotationConstants;
     }
 
 
@@ -314,24 +309,9 @@ public class celestial {
     }
 
     public Double getMandaEquation(Double argument, String planet) {
-        System.out.println("Args to getMandaEquation " + argument + ", " + planet);
-//		Double testVal1 = (Double) this.PlanetCircumm.get(planet) / 360;
-//		Double testVal2 = argument/kvmath.radianMultiplier;
-//		Double testVal3 = Math.sin(testVal2);
-//				
-//				Math.asin((Double) this.PlanetCircumm.get(planet) / 
-//				360 * Math.sin(argument / kvmath.radianMultiplier)) * 
-//				kvmath.radianMultiplier;
-//		
-//		System.out.println("test val1 :" + testVal1);
-//		System.out.println("test val1 :" + testVal1);
-//		System.out.println("test val1 :" + testVal1);
         return Math.asin((Double) this.PlanetCircumm.get(planet) /
                 360.0 * Math.sin(argument / kvmath.radianMultiplier)) *
                 kvmath.radianMultiplier;
-
-        //    return Math.asin(this.PlanetCircumm[planet] / 360 * Math.sin(argument / math.radianInDegrees)) * math.radianInDegrees;
-
     }
 
     public Double getTithi(Double tllong, Double tslong) {
@@ -358,28 +338,14 @@ public class celestial {
     }
 
     public Double getTllong(Double ahar) {
-        System.out.println("getTllong::Args passed - ahar :" + ahar);
-        System.out.println("yugarotation of moon :" + this.YugaRotation.get("moon"));
         Double meanLunarLongitude = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("moon"));
-        System.out.println("meanlunarlongitude calculated: " + meanLunarLongitude);
-        System.out.println("yugarotation of candrocca :" + this.YugaRotation.get("Candrocca"));
         Double apogee = (this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("Candrocca")) + 90.0);
         return this.zero360(meanLunarLongitude - this.getMandaEquation((meanLunarLongitude - apogee), "moon"));
     }
 
-//	  getTllong             : function (ahar) {
-//	    var meanLunarLongitude = this.getMeanLongitude(ahar, this.YugaRotation.moon);
-//	    var apogee = this.getMeanLongitude(ahar, this.YugaRotation.Candrocca) + 90;
-//	    return this.zero360(meanLunarLongitude - this.getMandaEquation((meanLunarLongitude - apogee), 'moon'));
-//	  }
-    //return 360 * math.fractional(rotation * ahargana / globals.YugaCivilDays);
-
     public Double getTslong(Double ahar) {
-        //System.out.println("Calling getMeanLongitude with args ahar =  " + ahar);
         Double meanSolarLongitude = this.getMeanLongitude(ahar, (Double) this.YugaRotation.get("sun"));
-        //System.out.println("Calling zero360 with args meanSolarLongitude =  " + meanSolarLongitude);
         Double TsLong = this.zero360(meanSolarLongitude - this.getMandaEquation((meanSolarLongitude - (Double) this.PlanetApogee.get("sun")), "sun"));
-        //System.out.println("zero360 returns " + TsLong);
         return TsLong;
     }
 

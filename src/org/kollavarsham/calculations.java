@@ -37,7 +37,6 @@ public class calculations {
     ;
 
     public void FromGregorian(Boolean bija, Double latitude, Calendar gregorianDate) {
-        System.out.println("Passed date :" + gregorianDate.getTime());
         //Java port
         //Settings will come from the global instance of this application where we would have provided the set APIs for it
         //For now I am going to use the hardcoded values for the settings bija and latitude that is going to be used in this method
@@ -129,11 +128,7 @@ public class calculations {
             myCelestial.PlanetMeanPosition.put(planets[i], myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.PlanetRotation.get(planets[i])));
             myCelestial.PlanetTruePosition.put(planets[i], myCelestial.getTrueLongitude(myGlobals.ahar, myGlobals.mslong, planets[i]));
 
-            //return new KollavarshamDate(malayalamYear, sauraMasaNum, sauraMasaDay);
-            System.out.println("malayalam Year : " + myGlobals.MalayalamYear);
-            System.out.println("Malayalam Masam   : " + myGlobals.malayalaMasa);
-            System.out.println("Malayalam star : " + myGlobals.malayalaNaksatra);
-        }
+           }
 
     }
 

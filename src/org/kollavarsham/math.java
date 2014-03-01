@@ -11,9 +11,6 @@ public class math {
     double radianMultiplier = 180.0 / Math.PI;
 
     public boolean isNumber(String str) {
-        //the nodejs port one does an isFinite() check as well.
-        //The exclusion of that may cause issues
-        //System.out.println("String to isNumber : " + str);
         NumberFormat formatter = NumberFormat.getInstance();
         ParsePosition pos = new ParsePosition(0);
         formatter.parse(str, pos);
@@ -81,7 +78,6 @@ public class math {
     }
 
     public Boolean floatingPointEqual(Double n1, Double n2) {
-        System.out.println("n1 is : " + n1 + ", n2 is :" + n2);
         Boolean areEqual = Math.abs(n1 - n2) < this.epsilon;
         return areEqual;
     }
