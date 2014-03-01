@@ -13,7 +13,6 @@ import java.util.Set;
  */
 
 public class Locations {
-    globals myGlobals;
 
     class Location {
     	
@@ -42,10 +41,9 @@ public class Locations {
         }
     }
     
-    Map<String, Location> theLocations;
+    static Map<String, Location> theLocations;
 
-    Locations() {
-        myGlobals = globals.getInstance();
+    public Locations() {
         theLocations = new HashMap<String, Location>();
 
         theLocations.put("Agra", new Location(27.2, 78.0));

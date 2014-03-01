@@ -21,7 +21,6 @@ public class Kollavarsham {
 
     globals myGlobals;
     calculations Calculations;
-    Locations kollavarshamLocations;
 
     Boolean bija;
     double latitude;
@@ -31,17 +30,19 @@ public class Kollavarsham {
     Double MalayalamYear;
     String MalayalamMonth;
     Calendar modernDate;
+    Locations locations;
 
 
     public Kollavarsham() {
         myGlobals = globals.getInstance();
         Calculations = new calculations();
         modernDate = Calendar.getInstance();
-        kollavarshamLocations = new Locations();
+        locations = new Locations();
+        
         //default options
         this.bija = false;
-        this.latitude = kollavarshamLocations.getLocationCoordinates("Ujjain").getLatitude();
-        this.longitude = kollavarshamLocations.getLocationCoordinates("Ujjain").getLongitude();
+        this.latitude = locations.getLocationCoordinates("Ujjain").getLatitude();
+        this.longitude = locations.getLocationCoordinates("Ujjain").getLongitude();
         
     }
 
@@ -51,11 +52,11 @@ public class Kollavarsham {
 
     public void setOptions(Boolean bija, String location) {
         this.bija = bija;
-        this.latitude = kollavarshamLocations.getLocationCoordinates(location).getLatitude();
-        this.longitude = kollavarshamLocations.getLocationCoordinates(location).getLongitude();
+        this.latitude = locations.getLocationCoordinates(location).getLatitude();
+        this.longitude = locations.getLocationCoordinates(location).getLongitude();
         if (!location.equals("Ujjain")){
             myGlobals.setDesantara(this.longitude, 
-            		kollavarshamLocations.getLocationCoordinates("Ujjain").getLongitude());
+            		locations.getLocationCoordinates("Ujjain").getLongitude());
         }
     }
 

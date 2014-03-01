@@ -29,7 +29,7 @@ import org.kollavarsham.Kollavarsham;
 	Calendar modernDate = Calendar.getInstance();
 	modernDate.set(2011, Calendar.APRIL, 4);
 	malayalamYear.setModernDate(modernDate);
-	malayalamYear.setOptions(true, 23.2, 75.8);
+	malayalamYear.setOptions(true, "Ujjain");
 	malayalamYear.FromGregorian();
 	malayalamYear.getMalayalamYear();
 	malayalamYear.getMalayalamMonthNum();
