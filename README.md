@@ -5,12 +5,26 @@ kollavarsham-java
 The JAVA API port for Kollavarsham (http://kollavarsham.org)
 
 ## Getting Started
-To use this source, clone this repository to local and create an Eclipse Java project from the cloned directory.
-jars for download and ant build scripts will be added soon.
+Download the sources and build using ant in the project root directory.
+```
+ant clean compile jar
+```
+Note: To compile the jUnit tests, download junit.4.xx.jar to {project-root}/lib
+
+To run the diagnostics, use the main() program in Kollavarsham using
+```
+ant run
+```
+
+To use Kollavarsham API in a different project, add Kollavarsham.jar from {project-root}/build/jar to the classpath
 
 ## Usage
 
 ```
+import org.kollavarsham.Kollavarsham;
+...
+...
+...
 	Kollavarsham malayalamYear = new Kollavarsham();
 	Calendar modernDate = Calendar.getInstance();
 	modernDate.set(2011, Calendar.APRIL, 4);

@@ -23,9 +23,7 @@ public class math {
         } catch (NumberFormatException nfe) {
             return false;
         }
-        //Will reach here only if parseInt was successful
         return true;
-        //return this.isNumber(str) && (Integer.parseInt(str) % 1) == 0;
     }
 
     public Double truncateDecimals(double x, int numberofDecimals) {
@@ -82,12 +80,5 @@ public class math {
         return areEqual;
     }
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
-    }
 }
 
