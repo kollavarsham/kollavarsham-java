@@ -1,6 +1,9 @@
 /bin
+/build
 .metadata
 *.class
+.idea
+myManifest
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
