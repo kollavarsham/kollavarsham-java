@@ -23,7 +23,27 @@ public class celestial {
     Map<String, Double> PlanetCircums;
     Map<String, Double> PlanetMeanPosition;
     Map<String, Double> PlanetTruePosition;
-    globals myGlobals;
+    public double tithiDay = 1.0;
+	public Double yugaCivilDays = 1.0;
+	public Double yugaSynodicMonth = 1.0;
+	public Double yugaAdhimasa = 1.0;
+	public Double yugaTithi = 1.0;
+	public Double yugaKsayadina = 1.0;
+	public Double backClongAhar = -1.0;
+	public Double backNclongAhar = -1.0;
+	public Double backClong = -1.0;
+	public Double backNclong = -1.0;
+	// type  paksas :(suklapaksa, krsnapaksa),
+	public Double year = 1.0;
+	public String paksa = "";
+	// (suklapaksa, krsnapaksa),
+	public Double ahar = 1.0; // {for ahargana}
+	public double ftithi = 1.0;
+	public Double sriseh = 1.0;
+	public Double srisem = 1.0;
+	public String suklaKrsna = "";
+	public Double ayanadeg = 1.0;
+	public double ayanamin = 1.0;
 
     private static celestial instance = null;
 
@@ -35,7 +55,6 @@ public class celestial {
     }
 
     protected celestial() {
-        myGlobals = globals.getInstance();
         primaryYugaRotationConstants = new HashMap<String, Double>();
         primaryYugaRotationConstants.put("star", 1582237800.0);
         primaryYugaRotationConstants.put("sun", 4320000.0);
@@ -118,14 +137,14 @@ public class celestial {
 
     public void setSecondaryConstants() {
         // TODO: Add Tests if/when feasible
-        myGlobals.yugaCivilDays = (Double) this.YugaRotation.get("star") -
+        this.yugaCivilDays = (Double) this.YugaRotation.get("star") -
                 (Double) this.YugaRotation.get("sun");
-        myGlobals.yugaSynodicMonth = (Double) this.YugaRotation.get("moon") -
+        this.yugaSynodicMonth = (Double) this.YugaRotation.get("moon") -
                 (Double) this.YugaRotation.get("sun");
-        myGlobals.yugaAdhimasa = myGlobals.yugaSynodicMonth -
+        this.yugaAdhimasa = this.yugaSynodicMonth -
                 12.0 * (Double) this.YugaRotation.get("sun");
-        myGlobals.yugaTithi = 30.0 * myGlobals.yugaSynodicMonth;
-        myGlobals.yugaKsayadina = myGlobals.yugaTithi - myGlobals.yugaCivilDays;
+        this.yugaTithi = 30.0 * this.yugaSynodicMonth;
+        this.yugaKsayadina = this.yugaTithi - this.yugaCivilDays;
     }
 
     public void setPlanetaryConstants() {
@@ -207,14 +226,14 @@ public class celestial {
         // Good reads:
         // https://en.wikipedia.org/wiki/Ayanamsa
         // http://pidaparthypanchangam.com/?m=201306&paged=2
-        Double ayanamsa = (54.0 * 4320000.0 / myGlobals.yugaCivilDays / 3600.0) * (ahargana - 1314930.0);
-        myGlobals.ayanadeg = KollavarshamMath.truncate(ayanamsa);
-        myGlobals.ayanamin = 60.0 * KollavarshamMath.fractional(ayanamsa);
+        Double ayanamsa = (54.0 * 4320000.0 / this.yugaCivilDays / 3600.0) * (ahargana - 1314930.0);
+        this.ayanadeg = KollavarshamMath.truncate(ayanamsa);
+        this.ayanamin = 60.0 * KollavarshamMath.fractional(ayanamsa);
     }
 
     public Double getMeanLongitude(Double ahargana, Double rotation) {
         // TODO: Add Tests if/when feasible
-        return 360.0 * KollavarshamMath.fractional(rotation * ahargana / myGlobals.yugaCivilDays);
+        return 360.0 * KollavarshamMath.fractional(rotation * ahargana / this.yugaCivilDays);
     }
 
     public Double getTrueLongitude(Double ahargana, Double meanSolarLongitude, String planet) {
@@ -287,10 +306,10 @@ public class celestial {
 
     public Double getDaylightEquation(Double year, Double latitude) {
         // TODO: Add Tests if/when feasible
-        Double meanSolarLongitude = this.getMeanLongitude(myGlobals.ahar, (Double) this.YugaRotation.get("sun"));
+        Double meanSolarLongitude = this.getMeanLongitude(this.ahar, (Double) this.YugaRotation.get("sun"));
 
         // Sayana Solar Longitude and Declination
-        Double sayanaMeanSolarLongitude = meanSolarLongitude + (54.0 / 3600.0) * (myGlobals.year - 499.0);
+        Double sayanaMeanSolarLongitude = meanSolarLongitude + (54.0 / 3600.0) * (this.year - 499.0);
         Double sayanaDeclination = this.declination(sayanaMeanSolarLongitude); // See Sewell, p.10
 
         // Equation of day light by Analemma (https://en.wikipedia.org/wiki/Analemma)
@@ -302,8 +321,8 @@ public class celestial {
     public void setSunriseTime(Double eqTime) {
         // TODO: Add Tests if/when feasible
         Double sunriseTime = (0.25 - eqTime) * 24.0;
-        myGlobals.sriseh = KollavarshamMath.truncate(sunriseTime);
-        myGlobals.srisem = KollavarshamMath.truncate(60.0 * KollavarshamMath.fractional(sunriseTime));
+        this.sriseh = KollavarshamMath.truncate(sunriseTime);
+        this.srisem = KollavarshamMath.truncate(60.0 * KollavarshamMath.fractional(sunriseTime));
     }
 
     public Double getMandaEquation(Double argument, String planet) {
@@ -320,19 +339,19 @@ public class celestial {
 
     public void setTithiSet(Double tithi) {
         // TODO: Add Tests if/when feasible
-        myGlobals.tithiDay = KollavarshamMath.truncate(tithi) + 1;
-        myGlobals.ftithi = KollavarshamMath.fractional(tithi);
+        this.tithiDay = KollavarshamMath.truncate(tithi) + 1;
+        this.ftithi = KollavarshamMath.fractional(tithi);
     }
 
     public void setSuklaKrsna() {
         // TODO: Add Tests if/when feasible
-        if (15 < myGlobals.tithiDay) {
-            myGlobals.tithiDay -= 15.0;
-            myGlobals.paksa = "Krsnapaksa";
+        if (15 < this.tithiDay) {
+            this.tithiDay -= 15.0;
+            this.paksa = "Krsnapaksa";
         } else {
-            myGlobals.paksa = "Suklapaksa";
+            this.paksa = "Suklapaksa";
         }
-        myGlobals.suklaKrsna = myGlobals.paksa;
+        this.suklaKrsna = this.paksa;
     }
 
     public Double getTllong(Double ahar) {
@@ -386,32 +405,32 @@ public class celestial {
     }
 
     public Double getClong(Double ahar, Double tithi) {
-        Double newNew = myGlobals.yugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
+        Double newNew = this.yugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
         ahar -= tithi * (newNew / 30.0);
 
-        if (Math.abs(ahar - myGlobals.backClongAhar) < 1) {
-            return (double) myGlobals.backClong;
-        } else if (Math.abs(ahar - myGlobals.backNclongAhar) < 1) {
-            myGlobals.backClongAhar = myGlobals.backNclongAhar;
-            myGlobals.backClong = myGlobals.backNclong;
-            return (double) myGlobals.backNclong;
+        if (Math.abs(ahar - this.backClongAhar) < 1) {
+            return (double) this.backClong;
+        } else if (Math.abs(ahar - this.backNclongAhar) < 1) {
+            this.backClongAhar = this.backNclongAhar;
+            this.backClong = this.backNclong;
+            return (double) this.backNclong;
         } else {
-            myGlobals.backClongAhar = ahar;
-            myGlobals.backClong = this.getConj(ahar);
-            return (double) myGlobals.backClong;
+            this.backClongAhar = ahar;
+            this.backClong = this.getConj(ahar);
+            return (double) this.backClong;
         }
     }
 
     public double getNclong(Double ahar, Double tithi) {
-        Double newNew = myGlobals.yugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
+        Double newNew = this.yugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
         ahar += (30.0 - tithi) * (newNew / 30.0);
 
-        if (Math.abs(ahar - myGlobals.backNclongAhar) < 1) {
-            return myGlobals.backNclong;
+        if (Math.abs(ahar - this.backNclongAhar) < 1) {
+            return this.backNclong;
         } else {
-            myGlobals.backNclongAhar = ahar;
-            myGlobals.backNclong = this.getConj(ahar);
-            return myGlobals.backNclong;
+            this.backNclongAhar = ahar;
+            this.backNclong = this.getConj(ahar);
+            return this.backNclong;
         }
     }
 

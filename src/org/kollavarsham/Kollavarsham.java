@@ -19,7 +19,6 @@ public class Kollavarsham {
      *
      */
 
-    globals myGlobals;
     calculations Calculations;
 
     Boolean bija;
@@ -34,7 +33,6 @@ public class Kollavarsham {
 
 
     public Kollavarsham() {
-        myGlobals = globals.getInstance();
         Calculations = new calculations();
         modernDate = Calendar.getInstance();
         locations = new Locations();
@@ -55,7 +53,7 @@ public class Kollavarsham {
         this.latitude = locations.getLocationCoordinates(location).getLatitude();
         this.longitude = locations.getLocationCoordinates(location).getLongitude();
         if (!location.equals("Ujjain")){
-            myGlobals.setDesantara(this.longitude, 
+            Calculations.setDesantara(this.longitude, 
             		locations.getLocationCoordinates("Ujjain").getLongitude());
         }
     }
@@ -63,9 +61,9 @@ public class Kollavarsham {
     public void FromGregorian() {
         Calculations._setConstants(this.bija);
         Calculations.FromGregorian(this.bija, this.latitude, this.modernDate);
-        MalayalamNakshatram = myGlobals.malayalaNaksatra;
-        MalayalamYear = myGlobals.MalayalamYear;
-        MalayalamMonth = myGlobals.malayalaMasa;
+        MalayalamNakshatram = Calculations.malayalaNaksatra;
+        MalayalamYear = Calculations.MalayalamYear;
+        MalayalamMonth = Calculations.malayalaMasa;
     }
 
     public String getMalayalamNakshatram() {
@@ -87,7 +85,7 @@ public class Kollavarsham {
         // Test Only
         Kollavarsham malayalamYear = new Kollavarsham();
         Calendar modernDate = Calendar.getInstance();
-        modernDate.set(2014, Calendar.MARCH, 2);
+        modernDate.set(2008, Calendar.AUGUST, 23);
         malayalamYear.setModernDate(modernDate);
         malayalamYear.setOptions(true, "Ujjain");
         malayalamYear.FromGregorian();

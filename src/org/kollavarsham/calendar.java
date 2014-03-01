@@ -9,13 +9,11 @@ public class calendar {
         public Double day;
 
         public SauraMasaMonthDay(Double month2, Double day2) {
-            // TODO Auto-generated constructor stub
             this.month = month2;
             this.day = day2;
         }
 
         public SauraMasaMonthDay() {
-            // TODO Auto-generated constructor stub
             this.month = 1.0;
             this.day = 1.0;
         }
@@ -42,11 +40,23 @@ public class calendar {
             "Chathayam", "Poororuttathi", "Uthrattathi", "Revathi", "Ashwathi"};
 
     celestial myCelestial;
-    globals myGlobals;
+
+	public Double samkranti = 1.0;
+
+	public Double samkrantiYear = 1.0;
+
+	public Double samkrantiMonth = 1.0;
+
+	public Double samkrantiDay = 1.0;
+
+	public Double samkrantiHour = 1.0;
+
+	public Double samkrantiMin = 1.0;
+
+	public Double desantara = 0.0;
 
     public calendar() {
         myCelestial = celestial.getInstance();
-        myGlobals = globals.getInstance();
     }
 
     //This function might not be required, We can use Calendar.roll()
@@ -171,7 +181,7 @@ public class calendar {
     }
 
     public double aharganaToKali(Double ahargana) {
-        return KollavarshamMath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myGlobals.yugaCivilDays);
+        return KollavarshamMath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myCelestial.yugaCivilDays);
     }
 
     public double kaliToSaka(Double yearKali) {
@@ -221,13 +231,13 @@ public class calendar {
 
     public Boolean isTodaySauraMasaFirst(Double ahargana) {
             /*
-						    //    Definition of the first day
-						    //    samkranti is between today's 0:00 and 24:00
-						    //    ==
-						    //    at 0:00 before 30x, at 24:00 after 30x
-			 */
-        Double tslongToday = myCelestial.getTslong(ahargana - myGlobals.desantara);
-        Double tslongTomorrow = myCelestial.getTslong(ahargana - myGlobals.desantara + 1);
+			//    Definition of the first day
+			//    samkranti is between today's 0:00 and 24:00
+			//    ==
+			//    at 0:00 before 30x, at 24:00 after 30x
+			*/
+        Double tslongToday = myCelestial.getTslong(ahargana - this.desantara);
+        Double tslongTomorrow = myCelestial.getTslong(ahargana - this.desantara + 1);
 
         tslongToday -= KollavarshamMath.truncate(tslongToday / 30) * 30;
         tslongTomorrow -= KollavarshamMath.truncate(tslongTomorrow / 30) * 30;
@@ -267,15 +277,19 @@ public class calendar {
     }
 
     public void setSamkranti(Double ahargana) {
-        myGlobals.samkranti = this.findSamkranti(ahargana, ahargana + 1) + myGlobals.desantara;
-        Object samkrantiModernDate = this.julianDayToModernDate(this.aharganaToJulianDay(myGlobals.samkranti));
+        this.samkranti = this.findSamkranti(ahargana, ahargana + 1) + this.desantara;
+        Object samkrantiModernDate = this.julianDayToModernDate(this.aharganaToJulianDay(this.samkranti));
        
-        myGlobals.samkrantiYear = (double) ((Calendar) samkrantiModernDate).get(Calendar.YEAR);
-        myGlobals.samkrantiMonth = (double) ((Calendar) samkrantiModernDate).get(Calendar.MONTH) + 1;
-        myGlobals.samkrantiDay = (double) ((Calendar) samkrantiModernDate).get(Calendar.DAY_OF_MONTH);
-        Double fractionalDay = KollavarshamMath.fractional(myGlobals.samkranti) * 24;
-        myGlobals.samkrantiHour = KollavarshamMath.truncate(fractionalDay);
-        myGlobals.samkrantiMin = KollavarshamMath.truncate(60 * KollavarshamMath.fractional(fractionalDay));
+        this.samkrantiYear = (double) ((Calendar) samkrantiModernDate).get(Calendar.YEAR);
+        this.samkrantiMonth = (double) ((Calendar) samkrantiModernDate).get(Calendar.MONTH) + 1;
+        this.samkrantiDay = (double) ((Calendar) samkrantiModernDate).get(Calendar.DAY_OF_MONTH);
+        Double fractionalDay = KollavarshamMath.fractional(this.samkranti) * 24;
+        this.samkrantiHour = KollavarshamMath.truncate(fractionalDay);
+        this.samkrantiMin = KollavarshamMath.truncate(60 * KollavarshamMath.fractional(fractionalDay));
+    }
+    
+    public void setDesantara(Double longitude, Double ujjainLongitude) {
+        this.desantara = (longitude - ujjainLongitude) / 360;
     }
 
     public String getMalayalaMasaName(Double number) {

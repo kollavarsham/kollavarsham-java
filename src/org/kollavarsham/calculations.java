@@ -14,12 +14,35 @@ public class calculations {
 
     calendar myCalendar;
     celestial myCelestial;
-    globals myGlobals;
+	public Double ahargana = 1.0;
+	public Double julianDay = 1.0; // {for Julian days}
+	public Double yearKali = 1.0;
+	public Double yearSaka = 1.0;
+	public Double yearVikrama = 1.0;
+	public Double masaNum = 1.0;
+	public String sauraMasa = "";
+	public Double sauraMasaNum = 1.0;
+	public Double sauraMasaDay = 1.0;
+	public String malayalaMasa = ""; // HP
+	public Double malayalaMasaNum = 1.0; // HP
+	public Double MalayalamYear = 1.0;
+	public String weekdayName = "";
+	public Double mslong = 1.0; // {solar position}
+	public Double tslong = 1.0; // {solar position}
+	public Double mllong = 1.0; // {lunar position}
+	public Double tllong = 1.0; // {lunar position}
+	public Double clong = 1.0;
+	public Double nclong = 1.0;
+	public Double tithi = 1.0;
+	public Double eqtime = 1.0; // {for equation of time}
+	public String adhimasa = "";
+	public String masa = "";
+	public String naksatra = "";
+	public String malayalaNaksatra = "";
 
     public calculations() {
         myCalendar = new calendar();
         myCelestial = celestial.getInstance();
-        myGlobals = globals.getInstance();
     }
 
     public void _setConstants(Boolean bija) {
@@ -30,9 +53,11 @@ public class calculations {
         }
         myCelestial.setSecondaryConstants();
         myCelestial.setPlanetaryConstants();
+    };
+    
+    public void setDesantara(Double longitude, Double defaultLongitude){
+    	myCalendar.setDesantara(longitude, defaultLongitude);
     }
-
-    ;
 
     public void FromGregorian(Boolean bija, Double latitude, Calendar gregorianDate) {
         //Java port
@@ -44,86 +69,86 @@ public class calculations {
         _setConstants(bija);
         // This is how it is done in Perl - we use the new gregorianDate global
         //globals.JulianDay = calendar.gregorianDateToJulianDay(new Date(globals.year, globals.month - 1, globals.day));
-        myGlobals.julianDay = myCalendar.gregorianDateToJulianDay(gregorianDate);
-        myGlobals.ahar = myCalendar.julianDayToAhargana(myGlobals.julianDay);
-        myGlobals.julianDay = KollavarshamMath.truncate(myGlobals.julianDay + 0.5);
-        myGlobals.ahargana = KollavarshamMath.truncate(myGlobals.ahar + 0.5);
-        myGlobals.weekdayName = myCalendar.julianDayToWeekday(myGlobals.julianDay);
-        myGlobals.year = (double) gregorianDate.get(Calendar.YEAR);
-        myCelestial.setAyanamsa(myGlobals.ahargana);
+        this.julianDay = myCalendar.gregorianDateToJulianDay(gregorianDate);
+        myCelestial.ahar = myCalendar.julianDayToAhargana(this.julianDay);
+        this.julianDay = KollavarshamMath.truncate(this.julianDay + 0.5);
+        this.ahargana = KollavarshamMath.truncate(myCelestial.ahar + 0.5);
+        this.weekdayName = myCalendar.julianDayToWeekday(this.julianDay);
+        myCelestial.year = (double) gregorianDate.get(Calendar.YEAR);
+        myCelestial.setAyanamsa(this.ahargana);
 
         // at 6 o'clock
-        myGlobals.ahar += 0.25;
+        myCelestial.ahar += 0.25;
 
         // desantara
-        myGlobals.ahar -= myGlobals.desantara;
+        myCelestial.ahar -= myCalendar.desantara;
 
         // time of sunrise at local latitude
-        myGlobals.eqtime = myCelestial.getDaylightEquation(myGlobals.year, latitude);
-        myGlobals.ahar -= myGlobals.eqtime;
-        myCelestial.setSunriseTime(myGlobals.eqtime);
+        this.eqtime = myCelestial.getDaylightEquation(myCelestial.year, latitude);
+        myCelestial.ahar -= this.eqtime;
+        myCelestial.setSunriseTime(this.eqtime);
 
         // Lunar apogee and node at sunrise
-        myCelestial.PlanetMeanPosition.put("Candrocca", (Double) myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("Candrocca")) + 90);
+        myCelestial.PlanetMeanPosition.put("Candrocca", (Double) myCelestial.getMeanLongitude(myCelestial.ahar, (Double) myCelestial.YugaRotation.get("Candrocca")) + 90);
         myCelestial.PlanetMeanPosition.put("Candrocca", myCelestial.zero360((Double) myCelestial.PlanetMeanPosition.get("Candrocca")));
 
-        myCelestial.PlanetMeanPosition.put("Rahu", myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("Rahu")) + 180);
+        myCelestial.PlanetMeanPosition.put("Rahu", myCelestial.getMeanLongitude(myCelestial.ahar, (Double) myCelestial.YugaRotation.get("Rahu")) + 180);
         myCelestial.PlanetMeanPosition.put("Rahu", myCelestial.zero360((Double) myCelestial.PlanetMeanPosition.get("Rahu")));
 
         // mean and true sun at sunrise
-        myGlobals.mslong = myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("sun"));
-        myCelestial.PlanetMeanPosition.put("sun", myGlobals.mslong);
-        myGlobals.tslong = myCelestial.zero360(myGlobals.mslong -
-                myCelestial.getMandaEquation((myGlobals.mslong - (Double) myCelestial.PlanetApogee.get("sun")), "sun"));
-        myCelestial.PlanetTruePosition.put("sun", myGlobals.tslong);
+        this.mslong = myCelestial.getMeanLongitude(myCelestial.ahar, (Double) myCelestial.YugaRotation.get("sun"));
+        myCelestial.PlanetMeanPosition.put("sun", this.mslong);
+        this.tslong = myCelestial.zero360(this.mslong -
+                myCelestial.getMandaEquation((this.mslong - (Double) myCelestial.PlanetApogee.get("sun")), "sun"));
+        myCelestial.PlanetTruePosition.put("sun", this.tslong);
 
         // mean and true moon at sunrise
-        myGlobals.mllong = myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.YugaRotation.get("moon"));
-        myCelestial.PlanetMeanPosition.put("moon", myGlobals.mllong);
+        this.mllong = myCelestial.getMeanLongitude(myCelestial.ahar, (Double) myCelestial.YugaRotation.get("moon"));
+        myCelestial.PlanetMeanPosition.put("moon", this.mllong);
         myCelestial.PlanetApogee.put("moon", myCelestial.PlanetMeanPosition.get("Candrocca"));
-        myGlobals.tllong = myCelestial.zero360(myGlobals.mllong -
-                myCelestial.getMandaEquation((myGlobals.mllong - (Double) myCelestial.PlanetApogee.get("moon")), "moon"));
-        myCelestial.PlanetTruePosition.put("moon", myGlobals.tllong);
+        this.tllong = myCelestial.zero360(this.mllong -
+                myCelestial.getMandaEquation((this.mllong - (Double) myCelestial.PlanetApogee.get("moon")), "moon"));
+        myCelestial.PlanetTruePosition.put("moon", this.tllong);
 
         // finding tithi and longitude of conjunction
-        myGlobals.tithi = myCelestial.getTithi(myGlobals.tllong, myGlobals.tslong);
-        myCelestial.setTithiSet(myGlobals.tithi);
+        this.tithi = myCelestial.getTithi(this.tllong, this.tslong);
+        myCelestial.setTithiSet(this.tithi);
         myCelestial.setSuklaKrsna();
 
         // last conjunction
-        myGlobals.clong = myCelestial.getClong(myGlobals.ahar, myGlobals.tithi);
+        this.clong = myCelestial.getClong(myCelestial.ahar, this.tithi);
 
         // next conjunction
-        myGlobals.nclong = myCelestial.getNclong(myGlobals.ahar, myGlobals.tithi);
+        this.nclong = myCelestial.getNclong(myCelestial.ahar, this.tithi);
 
-        myGlobals.adhimasa = myCalendar.getAdhimasa(myGlobals.clong, myGlobals.nclong);
-        myGlobals.masaNum = myCalendar.getMasaNum(myGlobals.tslong, myGlobals.clong);
-        myGlobals.masa = myCalendar.getMasaName(myGlobals.masaNum);
+        this.adhimasa = myCalendar.getAdhimasa(this.clong, this.nclong);
+        this.masaNum = myCalendar.getMasaNum(this.tslong, this.clong);
+        this.masa = myCalendar.getMasaName(this.masaNum);
 
-        calendar.SauraMasaMonthDay sauraMasaMonthDay = myCalendar.getSauraMasaMonthDay(myGlobals.ahar);
-        myGlobals.sauraMasaNum = sauraMasaMonthDay.month;
-        myGlobals.sauraMasaDay = sauraMasaMonthDay.day;
-        myGlobals.sauraMasa = myCalendar.getSauraMasaName(myGlobals.sauraMasaNum);
+        calendar.SauraMasaMonthDay sauraMasaMonthDay = myCalendar.getSauraMasaMonthDay(myCelestial.ahar);
+        this.sauraMasaNum = sauraMasaMonthDay.month;
+        this.sauraMasaDay = sauraMasaMonthDay.day;
+        this.sauraMasa = myCalendar.getSauraMasaName(this.sauraMasaNum);
 
-        myGlobals.malayalaMasaNum = (myGlobals.sauraMasaNum - 4 + 12) % 12;
-        myGlobals.malayalaMasa = myCalendar.getMalayalaMasaName(myGlobals.malayalaMasaNum);
+        this.malayalaMasaNum = (this.sauraMasaNum - 4 + 12) % 12;
+        this.malayalaMasa = myCalendar.getMalayalaMasaName(this.malayalaMasaNum);
 
-        myGlobals.naksatra = myCalendar.getNaksatraName(myGlobals.tllong);
-        myGlobals.malayalaNaksatra = myCalendar.getMalayalaNaksatraName(myGlobals.tllong);
+        this.naksatra = myCalendar.getNaksatraName(this.tllong);
+        this.malayalaNaksatra = myCalendar.getMalayalaNaksatraName(this.tllong);
 
         // kali and Saka era
-        myGlobals.yearKali = myCalendar.aharganaToKali(myGlobals.ahar + (4 - myGlobals.masaNum) * 30);
-        myGlobals.yearSaka = myCalendar.kaliToSaka(myGlobals.yearKali);
-        myGlobals.yearVikrama = myGlobals.yearSaka + 135;
+        this.yearKali = myCalendar.aharganaToKali(myCelestial.ahar + (4 - this.masaNum) * 30);
+        this.yearSaka = myCalendar.kaliToSaka(this.yearKali);
+        this.yearVikrama = this.yearSaka + 135;
 
         // Sewell p.45 - https://archive.org/stream/indiancalendarwi00sewerich#page/45/mode/1up
-        myGlobals.MalayalamYear = myGlobals.yearSaka - 747 +
-                KollavarshamMath.truncate((myGlobals.sauraMasaNum - myGlobals.malayalaMasaNum + 12) / 12);
+        this.MalayalamYear = this.yearSaka - 747 +
+                KollavarshamMath.truncate((this.sauraMasaNum - this.malayalaMasaNum + 12) / 12);
 
         String[] planets = {"mercury", "venus", "mars", "jupiter", "saturn"};
         for (int i = 0; i < planets.length; i++) {
-            myCelestial.PlanetMeanPosition.put(planets[i], myCelestial.getMeanLongitude(myGlobals.ahar, (Double) myCelestial.PlanetRotation.get(planets[i])));
-            myCelestial.PlanetTruePosition.put(planets[i], myCelestial.getTrueLongitude(myGlobals.ahar, myGlobals.mslong, planets[i]));
+            myCelestial.PlanetMeanPosition.put(planets[i], myCelestial.getMeanLongitude(myCelestial.ahar, (Double) myCelestial.PlanetRotation.get(planets[i])));
+            myCelestial.PlanetTruePosition.put(planets[i], myCelestial.getTrueLongitude(myCelestial.ahar, this.mslong, planets[i]));
 
            }
 
