@@ -23,16 +23,6 @@ public class calendar {
 
     }
 
-    //This may not be required. Better to use CALENDAR.JANUARY etc...
-    public enum monthsEnum {
-        JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST,
-        SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
-    }
-
-    ;
-
-    public monthsEnum months;
-
     public String[] masaNames = {"Caitra", "Vaisakha", "Jyaistha", "Asadha",
             "Sravana", "Bhadrapada", "Asvina", "Karttika", "Margasirsa", "Pausa", "Magha", "Phalguna"};
 
@@ -52,12 +42,10 @@ public class calendar {
             "Vishakham", "Anizham", "Thrikketta", "Moolam", "Pooradam", "Uthradam", "Thiruvonam", "Avittam",
             "Chathayam", "Poororuttathi", "Uthrattathi", "Revathi", "Ashwathi"};
 
-    math mymath;
     celestial myCelestial;
     globals myGlobals;
 
     public calendar() {
-        mymath = new math();
         myCelestial = celestial.getInstance();
         myGlobals = globals.getInstance();
     }
@@ -87,8 +75,8 @@ public class calendar {
             month += 12;
         }
 
-        double julianDay = mymath.truncate(365.25 * year) +
-                mymath.truncate(30.59 * (month - 2)) + day + 1721086.5;
+        double julianDay = KollavarshamMath.truncate(365.25 * year) +
+                KollavarshamMath.truncate(30.59 * (month - 2)) + day + 1721086.5;
 
         if (year < 0) {
             julianDay -= 1;
@@ -98,7 +86,7 @@ public class calendar {
         }
 
         if (2299160 < julianDay) {
-            julianDay += (mymath.truncate(year / 400) - mymath.truncate(year / 100) + 2);
+            julianDay += (KollavarshamMath.truncate(year / 400) - KollavarshamMath.truncate(year / 100) + 2);
         }
 
         return julianDay;
@@ -118,15 +106,15 @@ public class calendar {
     public Calendar julianDayToJulianDate(double julianDay) {
         Double j, k, l, n, i, J, I, year, month, day;
 
-        j = mymath.truncate(julianDay) + 1402;
-        k = mymath.truncate((j - 1) / 1461);
+        j = KollavarshamMath.truncate(julianDay) + 1402;
+        k = KollavarshamMath.truncate((j - 1) / 1461);
         l = j - 1461 * k;
-        n = mymath.truncate((l - 1) / 365) - mymath.truncate(l / 1461);
+        n = KollavarshamMath.truncate((l - 1) / 365) - KollavarshamMath.truncate(l / 1461);
         i = l - 365 * n + 30;
-        J = mymath.truncate(80 * i / 2447);
-        I = mymath.truncate(J / 11);
+        J = KollavarshamMath.truncate(80 * i / 2447);
+        I = KollavarshamMath.truncate(J / 11);
 
-        day = i - mymath.truncate(2447 * J / 80);
+        day = i - KollavarshamMath.truncate(2447 * J / 80);
         month = J + 2 - 12 * I;
         year = 4 * k + n + I - 4716;
 
@@ -141,16 +129,16 @@ public class calendar {
         Double year, month, day;
 
         a = julianDay + 68569;
-        b = mymath.truncate(a / 36524.25);
-        c = a - mymath.truncate(36524.25 * b + 0.75);
-        e = mymath.truncate((c + 1) / 365.2425);
-        f = c - mymath.truncate(365.25 * e) + 31;
-        g = mymath.truncate(f / 30.59);
-        h = mymath.truncate(g / 11);
+        b = KollavarshamMath.truncate(a / 36524.25);
+        c = a - KollavarshamMath.truncate(36524.25 * b + 0.75);
+        e = KollavarshamMath.truncate((c + 1) / 365.2425);
+        f = c - KollavarshamMath.truncate(365.25 * e) + 31;
+        g = KollavarshamMath.truncate(f / 30.59);
+        h = KollavarshamMath.truncate(g / 11);
 
-        day = mymath.truncate(f - mymath.truncate(30.59 * g) + (julianDay - mymath.truncate(julianDay)));
-        month = mymath.truncate(g - 12 * h + 2);
-        year = mymath.truncate(100 * (b - 49) + e + h);
+        day = KollavarshamMath.truncate(f - KollavarshamMath.truncate(30.59 * g) + (julianDay - KollavarshamMath.truncate(julianDay)));
+        month = KollavarshamMath.truncate(g - 12 * h + 2);
+        year = KollavarshamMath.truncate(100 * (b - 49) + e + h);
 
         Calendar result = Calendar.getInstance();
 
@@ -163,7 +151,6 @@ public class calendar {
     }
 
     public Calendar julianDayToModernDate(double julianDay) {
-        //return type of object is a hack. I am not sure as of now, I have only eliminated the conpile issue
         return julianDay < 2299239 ? this.julianDayToJulianDate(julianDay) : this.julianDayToGregorianDate(julianDay);
     }
 
@@ -177,7 +164,7 @@ public class calendar {
 
     public String julianDayToWeekday(double julianDay) {
         String[] weekday = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        return weekday[(mymath.truncate(julianDay + 0.5)).intValue() % 7];
+        return weekday[(KollavarshamMath.truncate(julianDay + 0.5)).intValue() % 7];
     }
 
     public double aharganaToJulianDay(Double ahargana) {
@@ -185,7 +172,7 @@ public class calendar {
     }
 
     public double aharganaToKali(Double ahargana) {
-        return mymath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myGlobals.YugaCivilDays);
+        return KollavarshamMath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myGlobals.YugaCivilDays);
     }
 
     public double kaliToSaka(Double yearKali) {
@@ -193,12 +180,12 @@ public class calendar {
     }
 
     public String getAdhimasa(Double clong, Double nclong) {
-        return mymath.floatingPointEqual(mymath.truncate(clong / 30), mymath.truncate(nclong / 30)) ? "Adhika-" : "";
+        return KollavarshamMath.floatingPointEqual(KollavarshamMath.truncate(clong / 30), KollavarshamMath.truncate(nclong / 30)) ? "Adhika-" : "";
     }
 
     public Double getMasaNum(Double tslong, Double clong) {
-        Double masaNum = mymath.truncate(tslong / 30) % 12;
-        if (masaNum == mymath.truncate(clong / 30) % 12) {
+        Double masaNum = KollavarshamMath.truncate(tslong / 30) % 12;
+        if (masaNum == KollavarshamMath.truncate(clong / 30) % 12) {
             masaNum += 1;
         }
         masaNum = (masaNum + 12) % 12;
@@ -213,12 +200,12 @@ public class calendar {
         // If today is the first day then 1
         // Otherwise yesterday's + 1
         Double month, day;
-        ahargana = mymath.truncate(ahargana);
+        ahargana = KollavarshamMath.truncate(ahargana);
         SauraMasaMonthDay sauraMasaMonthDay = new SauraMasaMonthDay();
         if (this.isTodaySauraMasaFirst(ahargana)) {
             day = 1.0;
             Double tsLongTomorrow = myCelestial.getTslong(ahargana + 1);
-            month = mymath.truncate(tsLongTomorrow / 30) % 12;
+            month = KollavarshamMath.truncate(tsLongTomorrow / 30) % 12;
             month = (month + 12) % 12;
         } else {
             sauraMasaMonthDay = this.getSauraMasaMonthDay(ahargana - 1);
@@ -243,8 +230,8 @@ public class calendar {
         Double tslongToday = myCelestial.getTslong(ahargana - myGlobals.desantara);
         Double tslongTomorrow = myCelestial.getTslong(ahargana - myGlobals.desantara + 1);
 
-        tslongToday -= mymath.truncate(tslongToday / 30) * 30;
-        tslongTomorrow -= mymath.truncate(tslongTomorrow / 30) * 30;
+        tslongToday -= KollavarshamMath.truncate(tslongToday / 30) * 30;
+        tslongTomorrow -= KollavarshamMath.truncate(tslongTomorrow / 30) * 30;
 
         if (25 < tslongToday && tslongTomorrow < 5) {
             this.setSamkranti(ahargana);
@@ -260,18 +247,18 @@ public class calendar {
         Double leftTslong = myCelestial.getTslong(leftAhargana);
         Double rightTslong = myCelestial.getTslong(rightAhargana);
 
-        leftTslong -= mymath.truncate(leftTslong / 30) * 30;
-        rightTslong -= mymath.truncate(rightTslong / 30) * 30;
+        leftTslong -= KollavarshamMath.truncate(leftTslong / 30) * 30;
+        rightTslong -= KollavarshamMath.truncate(rightTslong / 30) * 30;
 			/* --- END   REDUNDANT ------------------- */
 
         Double width = (rightAhargana - leftAhargana) / 2;
         Double centreAhargana = (rightAhargana + leftAhargana) / 2;
 
-        if (width < mymath.epsilon) {
+        if (width < KollavarshamMath.epsilon) {
             return centreAhargana;
         } else {
             Double centreTslong = myCelestial.getTslong(centreAhargana);
-            centreTslong -= mymath.truncate(centreTslong / 30) * 30;
+            centreTslong -= KollavarshamMath.truncate(centreTslong / 30) * 30;
             if (centreTslong < 5) {
                 return this.findSamkranti(leftAhargana, centreAhargana);
             } else {
@@ -283,18 +270,13 @@ public class calendar {
     public void setSamkranti(Double ahargana) {
         myGlobals.samkranti = this.findSamkranti(ahargana, ahargana + 1) + myGlobals.desantara;
         Object samkrantiModernDate = this.julianDayToModernDate(this.aharganaToJulianDay(myGlobals.samkranti));
-        if (samkrantiModernDate.getClass().getSimpleName() == "date") {
-            myGlobals.samkrantiYear = ((date) samkrantiModernDate).getYear();
-            myGlobals.samkrantiMonth = ((date) samkrantiModernDate).getMonth();
-            myGlobals.samkrantiDay = ((date) samkrantiModernDate).getDay();
-        } else {
-            myGlobals.samkrantiYear = (double) ((Calendar) samkrantiModernDate).get(Calendar.YEAR);
-            myGlobals.samkrantiMonth = (double) ((Calendar) samkrantiModernDate).get(Calendar.MONTH) + 1;
-            myGlobals.samkrantiDay = (double) ((Calendar) samkrantiModernDate).get(Calendar.DAY_OF_MONTH);
-        }
-        Double fractionalDay = mymath.fractional(myGlobals.samkranti) * 24;
-        myGlobals.samkrantiHour = mymath.truncate(fractionalDay);
-        myGlobals.samkrantiMin = mymath.truncate(60 * mymath.fractional(fractionalDay));
+       
+        myGlobals.samkrantiYear = (double) ((Calendar) samkrantiModernDate).get(Calendar.YEAR);
+        myGlobals.samkrantiMonth = (double) ((Calendar) samkrantiModernDate).get(Calendar.MONTH) + 1;
+        myGlobals.samkrantiDay = (double) ((Calendar) samkrantiModernDate).get(Calendar.DAY_OF_MONTH);
+        Double fractionalDay = KollavarshamMath.fractional(myGlobals.samkranti) * 24;
+        myGlobals.samkrantiHour = KollavarshamMath.truncate(fractionalDay);
+        myGlobals.samkrantiMin = KollavarshamMath.truncate(60 * KollavarshamMath.fractional(fractionalDay));
     }
 
     public String getMalayalaMasaName(Double number) {
@@ -302,19 +284,11 @@ public class calendar {
     }
 
     public String getNaksatraName(Double tllong) {
-        return this.naksatras[(mymath.truncate(tllong * 27 / 360)).intValue()];
+        return this.naksatras[(KollavarshamMath.truncate(tllong * 27 / 360)).intValue()];
     }
 
     public String getMalayalaNaksatraName(Double tllong) {
-        return this.malayalaNaksatras[(mymath.truncate(tllong * 27 / 360)).intValue()];
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
+        return this.malayalaNaksatras[(KollavarshamMath.truncate(tllong * 27 / 360)).intValue()];
     }
 
 }

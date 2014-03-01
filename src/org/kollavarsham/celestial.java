@@ -15,7 +15,7 @@ public class celestial {
 
     Map<String, Double> primaryYugaRotationConstants;
     Map<String, String> planetNames;
-    math kvmath;
+    KollavarshamMath kvmath;
     public Map<String, Double> YugaRotation;
     Map<String, Double> PlanetRotation;
     Map<String, Double> PlanetSighra;
@@ -68,7 +68,7 @@ public class celestial {
         PlanetCircums = new HashMap<String, Double>();
         PlanetMeanPosition = new HashMap<String, Double>();
         PlanetTruePosition = new HashMap<String, Double>();
-        kvmath = new math();
+        kvmath = new KollavarshamMath();
 
     }
 

@@ -17,7 +17,7 @@ public class TestCalendar {
 
     calendar kvcal;
     celestial Celestial;
-    math mymath;
+    KollavarshamMath mymath;
     Calendar gregcal, nextcal;
 
     @BeforeClass
@@ -32,7 +32,7 @@ public class TestCalendar {
     public void setUp() throws Exception {
         kvcal = new calendar();
         Celestial = celestial.getInstance();
-        mymath = new math();
+        mymath = new KollavarshamMath();
         gregcal = Calendar.getInstance();
         nextcal = Calendar.getInstance();
 
@@ -52,14 +52,14 @@ public class TestCalendar {
         return false;
     }
 
-    public Boolean cmpDates(date kvdate, Calendar cal) {
-        if ((cal.get(Calendar.YEAR) == kvdate.getYear()) &&
-                (cal.get(Calendar.MONTH) == kvdate.getMonth()) &&
-                (cal.get(Calendar.DAY_OF_MONTH) == kvdate.getDay())) {
-            return true;
-        }
-        return false;
-    }
+//    public Boolean cmpDates(date kvdate, Calendar cal) {
+//        if ((cal.get(Calendar.YEAR) == kvdate.getYear()) &&
+//                (cal.get(Calendar.MONTH) == kvdate.getMonth()) &&
+//                (cal.get(Calendar.DAY_OF_MONTH) == kvdate.getDay())) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Test
     public void testNextDate() {

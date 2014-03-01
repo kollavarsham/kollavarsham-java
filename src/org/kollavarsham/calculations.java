@@ -15,13 +15,11 @@ public class calculations {
     calendar myCalendar;
     celestial myCelestial;
     globals myGlobals;
-    math myMath;
 
     public calculations() {
         myCalendar = new calendar();
         myCelestial = celestial.getInstance();
         myGlobals = globals.getInstance();
-        myMath = new math();
     }
 
     public void _setConstants(Boolean bija) {
@@ -48,8 +46,8 @@ public class calculations {
         //globals.JulianDay = calendar.gregorianDateToJulianDay(new Date(globals.year, globals.month - 1, globals.day));
         myGlobals.JulianDay = myCalendar.gregorianDateToJulianDay(gregorianDate);
         myGlobals.ahar = myCalendar.julianDayToAhargana(myGlobals.JulianDay);
-        myGlobals.JulianDay = myMath.truncate(myGlobals.JulianDay + 0.5);
-        myGlobals.ahargana = myMath.truncate(myGlobals.ahar + 0.5);
+        myGlobals.JulianDay = KollavarshamMath.truncate(myGlobals.JulianDay + 0.5);
+        myGlobals.ahargana = KollavarshamMath.truncate(myGlobals.ahar + 0.5);
         myGlobals.weekdayName = myCalendar.julianDayToWeekday(myGlobals.JulianDay);
         myGlobals.year = (double) gregorianDate.get(Calendar.YEAR);
         myCelestial.setAyanamsa(myGlobals.ahargana);
@@ -120,7 +118,7 @@ public class calculations {
 
         // Sewell p.45 - https://archive.org/stream/indiancalendarwi00sewerich#page/45/mode/1up
         myGlobals.MalayalamYear = myGlobals.YearSaka - 747 +
-                myMath.truncate((myGlobals.sauraMasaNum - myGlobals.malayalaMasaNum + 12) / 12);
+                KollavarshamMath.truncate((myGlobals.sauraMasaNum - myGlobals.malayalaMasaNum + 12) / 12);
         //myGlobals.MEYear = myGlobals.;
 
         String[] planets = {"mercury", "venus", "mars", "jupiter", "saturn"};
@@ -129,15 +127,6 @@ public class calculations {
             myCelestial.PlanetTruePosition.put(planets[i], myCelestial.getTrueLongitude(myGlobals.ahar, myGlobals.mslong, planets[i]));
 
            }
-
-    }
-
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
 
     }
 

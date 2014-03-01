@@ -5,19 +5,19 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 
-public class math {
+public final class KollavarshamMath {
 
-    double epsilon = 1E-8;
-    double radianMultiplier = 180.0 / Math.PI;
+    public static final double epsilon = 1E-8;
+    public static final double radianMultiplier = 180.0 / Math.PI;
 
-    public boolean isNumber(String str) {
+    public static boolean isNumber(String str) {
         NumberFormat formatter = NumberFormat.getInstance();
         ParsePosition pos = new ParsePosition(0);
         formatter.parse(str, pos);
         return str.length() == pos.getIndex();
     }
 
-    public boolean isInt(String str) {
+    public static boolean isInt(String str) {
         try {
             int x = Integer.parseInt(str);
         } catch (NumberFormatException nfe) {
@@ -26,7 +26,7 @@ public class math {
         return true;
     }
 
-    public Double truncateDecimals(double x, int numberofDecimals) {
+    public static Double truncateDecimals(double x, int numberofDecimals) {
         BigDecimal truncated;
         if (x > 0) {
             truncated = new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_FLOOR);
@@ -36,47 +36,35 @@ public class math {
         return truncated.doubleValue();
     }
 
-    public Double truncate(Double num) {
-        return this.truncateDecimals(num, 0);
+    public static Double truncate(Double num) {
+        return truncateDecimals(num, 0);
     }
 
-    public double floor(Double num) {
+    public static double floor(Double num) {
         return Math.floor(num);
     }
 
-    public double fractional(Double num) {
+    public static double fractional(Double num) {
         //might need to revisit for the precision
         //based on the junit results. (Not the delta .01 set in assertEquals)
         double result = num % 1;
         return result;
     }
 
-    public long round(Double num) {
+    public static long round(Double num) {
         return Math.round(num);
-    }
-
-    public double getEpsilon() {
-        return epsilon;
-    }
-
-    public void setEpsilon(double epsilon) {
-        this.epsilon = epsilon;
     }
 
     public double getRadianMultiplier() {
         return radianMultiplier;
     }
 
-    public void setRadianMultiplier(double radianMultiplier) {
-        this.radianMultiplier = radianMultiplier;
-    }
-
-    public double square(double num) {
+    public static double square(double num) {
         return Math.pow(num, 2.0);
     }
 
-    public Boolean floatingPointEqual(Double n1, Double n2) {
-        Boolean areEqual = Math.abs(n1 - n2) < this.epsilon;
+    public static Boolean floatingPointEqual(Double n1, Double n2) {
+        Boolean areEqual = Math.abs(n1 - n2) < epsilon;
         return areEqual;
     }
 

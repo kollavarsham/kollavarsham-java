@@ -13,11 +13,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.kollavarsham.calculations;
 import org.kollavarsham.celestial;
-import org.kollavarsham.math;
+import org.kollavarsham.KollavarshamMath;
 
 public class TestCelestial {
 	celestial kvcelestial;
-	math kvmath;
+	KollavarshamMath kvmath;
 	calculations kvcalculations;
 
 	@BeforeClass
@@ -35,7 +35,7 @@ public class TestCelestial {
 		//kvcelestial.applyBija();
 	    kvcelestial.setSecondaryConstants();
 	    kvcelestial.setPlanetaryConstants();
-	    kvmath = new math();
+	    kvmath = new KollavarshamMath();
 	    kvcalculations = new calculations();
 	}
 
