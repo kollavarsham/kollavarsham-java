@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import org.kollavarsham.KollavarshamMath;
 
-public class TestMath {
+public class MathTest {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {

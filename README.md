@@ -15,7 +15,15 @@ To run the diagnostics, use the main() program in Kollavarsham using
 ```
 ant run
 ```
-
+To run the junit tests, download hamcrest-core-X.X.jar to {project-root}/lib and run the following target
+```
+ant junit
+```
+To view the report, run the following target:
+``` 
+ant junitreport
+```
+And point your browser to {project-root}/build/junitreport/index.html
 To use Kollavarsham API in a different project, add Kollavarsham.jar from {project-root}/build/jar to the classpath
 
 ## Usage

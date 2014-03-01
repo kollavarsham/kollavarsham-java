@@ -15,7 +15,7 @@ import org.kollavarsham.calculations;
 import org.kollavarsham.celestial;
 import org.kollavarsham.KollavarshamMath;
 
-public class TestCelestial {
+public class CelestialTest {
 	celestial kvcelestial;
 	calculations kvcalculations;
 
