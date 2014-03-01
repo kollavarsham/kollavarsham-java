@@ -23,27 +23,28 @@ public class celestial {
     Map<String, Double> PlanetCircums;
     Map<String, Double> PlanetMeanPosition;
     Map<String, Double> PlanetTruePosition;
-    public double tithiDay = 1.0;
+    
+    double tithiDay = 1.0;
 	public Double yugaCivilDays = 1.0;
-	public Double yugaSynodicMonth = 1.0;
-	public Double yugaAdhimasa = 1.0;
-	public Double yugaTithi = 1.0;
-	public Double yugaKsayadina = 1.0;
-	public Double backClongAhar = -1.0;
-	public Double backNclongAhar = -1.0;
-	public Double backClong = -1.0;
-	public Double backNclong = -1.0;
+	Double yugaSynodicMonth = 1.0;
+	Double yugaAdhimasa = 1.0;
+	Double yugaTithi = 1.0;
+	Double yugaKsayadina = 1.0;
+	Double backClongAhar = -1.0;
+	Double backNclongAhar = -1.0;
+	Double backClong = -1.0;
+	Double backNclong = -1.0;
 	// type  paksas :(suklapaksa, krsnapaksa),
 	public Double year = 1.0;
-	public String paksa = "";
+	String paksa = "";
 	// (suklapaksa, krsnapaksa),
 	public Double ahar = 1.0; // {for ahargana}
-	public double ftithi = 1.0;
-	public Double sriseh = 1.0;
-	public Double srisem = 1.0;
-	public String suklaKrsna = "";
-	public Double ayanadeg = 1.0;
-	public double ayanamin = 1.0;
+	double ftithi = 1.0;
+	Double sriseh = 1.0;
+	Double srisem = 1.0;
+	String suklaKrsna = "";
+	Double ayanadeg = 1.0;
+	double ayanamin = 1.0;
 
     private static celestial instance = null;
 
@@ -78,6 +79,7 @@ public class celestial {
         planetNames.put("saturn", "Saturn      ");
         planetNames.put("Candrocca", "Candrocca   ");
         planetNames.put("Rahu", "Rahu        ");
+        
         YugaRotation = new HashMap<String, Double>();
         PlanetRotation = new HashMap<String, Double>();
         PlanetSighra = new HashMap<String, Double>();

@@ -14,30 +14,32 @@ public class calculations {
 
     calendar myCalendar;
     celestial myCelestial;
-	public Double ahargana = 1.0;
-	public Double julianDay = 1.0; // {for Julian days}
-	public Double yearKali = 1.0;
-	public Double yearSaka = 1.0;
-	public Double yearVikrama = 1.0;
-	public Double masaNum = 1.0;
-	public String sauraMasa = "";
-	public Double sauraMasaNum = 1.0;
-	public Double sauraMasaDay = 1.0;
+	Double ahargana = 1.0;
+	Double julianDay = 1.0; // {for Julian days}
+	Double yearKali = 1.0;
+	Double yearSaka = 1.0;
+	Double yearVikrama = 1.0;
+	Double masaNum = 1.0;
+	String sauraMasa = "";
+	Double sauraMasaNum = 1.0;
+	Double sauraMasaDay = 1.0;
+	
 	public String malayalaMasa = ""; // HP
 	public Double malayalaMasaNum = 1.0; // HP
 	public Double MalayalamYear = 1.0;
-	public String weekdayName = "";
-	public Double mslong = 1.0; // {solar position}
-	public Double tslong = 1.0; // {solar position}
-	public Double mllong = 1.0; // {lunar position}
-	public Double tllong = 1.0; // {lunar position}
-	public Double clong = 1.0;
-	public Double nclong = 1.0;
-	public Double tithi = 1.0;
-	public Double eqtime = 1.0; // {for equation of time}
-	public String adhimasa = "";
-	public String masa = "";
-	public String naksatra = "";
+	
+	String weekdayName = "";
+	Double mslong = 1.0; // {solar position}
+	Double tslong = 1.0; // {solar position}
+	Double mllong = 1.0; // {lunar position}
+	Double tllong = 1.0; // {lunar position}
+	Double clong = 1.0;
+	Double nclong = 1.0;
+	Double tithi = 1.0;
+	Double eqtime = 1.0; // {for equation of time}
+	String adhimasa = "";
+	String masa = "";
+	String naksatra = "";
 	public String malayalaNaksatra = "";
 
     public calculations() {

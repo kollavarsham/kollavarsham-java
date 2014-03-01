@@ -41,18 +41,13 @@ public class calendar {
 
     celestial myCelestial;
 
-	public Double samkranti = 1.0;
-
-	public Double samkrantiYear = 1.0;
-
-	public Double samkrantiMonth = 1.0;
-
-	public Double samkrantiDay = 1.0;
-
-	public Double samkrantiHour = 1.0;
-
-	public Double samkrantiMin = 1.0;
-
+	Double samkranti = 1.0;
+	Double samkrantiYear = 1.0;
+	Double samkrantiMonth = 1.0;
+	Double samkrantiDay = 1.0;
+	Double samkrantiHour = 1.0;
+	Double samkrantiMin = 1.0;
+	
 	public Double desantara = 0.0;
 
     public calendar() {
