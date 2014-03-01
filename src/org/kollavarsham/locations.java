@@ -68,12 +68,4 @@ public class locations {
         myGlobals.desantara = (Double) ((longitude - ((location) theLocations.get("Ujjain")).longitude) / 360);
     }
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
-    }
-
 }

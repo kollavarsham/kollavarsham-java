@@ -22,10 +22,6 @@ public class Kollavarsham {
     globals myGlobals;
     calculations Calculations;
 
-    public static final int MALAYALAM_YEAR = 1;
-    public static final int MALAYALAM_MONTH_NUM = 2;
-    public static final int MALAYALAM_DAY_OF_MONTH = 3;
-
     Boolean bija = false;
     double latitude = 23.2;
     double longitude = 75.8;
@@ -79,7 +75,7 @@ public class Kollavarsham {
         // Test Only
         Kollavarsham malayalamYear = new Kollavarsham();
         Calendar modernDate = Calendar.getInstance();
-        modernDate.set(2013, Calendar.SEPTEMBER, 17);
+        modernDate.set(2014, Calendar.MARCH, 2);
         malayalamYear.setModernDate(modernDate);
         malayalamYear.setOptions(true, 23.2, 75.8);
         malayalamYear.FromGregorian();

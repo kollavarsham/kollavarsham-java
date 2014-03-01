@@ -17,7 +17,6 @@ public class TestCalendar {
 
     calendar kvcal;
     celestial Celestial;
-    KollavarshamMath mymath;
     Calendar gregcal, nextcal;
 
     @BeforeClass
@@ -32,7 +31,6 @@ public class TestCalendar {
     public void setUp() throws Exception {
         kvcal = new calendar();
         Celestial = celestial.getInstance();
-        mymath = new KollavarshamMath();
         gregcal = Calendar.getInstance();
         nextcal = Calendar.getInstance();
 
@@ -51,15 +49,6 @@ public class TestCalendar {
         }
         return false;
     }
-
-//    public Boolean cmpDates(date kvdate, Calendar cal) {
-//        if ((cal.get(Calendar.YEAR) == kvdate.getYear()) &&
-//                (cal.get(Calendar.MONTH) == kvdate.getMonth()) &&
-//                (cal.get(Calendar.DAY_OF_MONTH) == kvdate.getDay())) {
-//            return true;
-//        }
-//        return false;
-//    }
 
     @Test
     public void testNextDate() {
@@ -282,8 +271,8 @@ public class TestCalendar {
 
     @Test
     public void testFindSamkranti() {
-        assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(1868206.0, 1868207.0), 1868206.71761142));
-        assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(1868236.0, 1868237.0), 1868236.15636098));
+        assertTrue(KollavarshamMath.floatingPointEqual(kvcal.findSamkranti(1868206.0, 1868207.0), 1868206.71761142));
+        assertTrue(KollavarshamMath.floatingPointEqual(kvcal.findSamkranti(1868236.0, 1868237.0), 1868236.15636098));
 //	    assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(1868266.0, 1868267.0), 1868266.00000001));
 //	    assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(1721431.0, 1721432.0), 1721431.9425787));
 //	    assertTrue(mymath.floatingPointEqual(kvcal.findSamkranti(2299153.0, 2299154.0), 2299153.23922039));

@@ -172,7 +172,7 @@ public class calendar {
     }
 
     public double aharganaToKali(Double ahargana) {
-        return KollavarshamMath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myGlobals.YugaCivilDays);
+        return KollavarshamMath.truncate(ahargana * (Double) myCelestial.YugaRotation.get("sun") / myGlobals.yugaCivilDays);
     }
 
     public double kaliToSaka(Double yearKali) {

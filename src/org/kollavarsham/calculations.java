@@ -44,11 +44,11 @@ public class calculations {
         _setConstants(bija);
         // This is how it is done in Perl - we use the new gregorianDate global
         //globals.JulianDay = calendar.gregorianDateToJulianDay(new Date(globals.year, globals.month - 1, globals.day));
-        myGlobals.JulianDay = myCalendar.gregorianDateToJulianDay(gregorianDate);
-        myGlobals.ahar = myCalendar.julianDayToAhargana(myGlobals.JulianDay);
-        myGlobals.JulianDay = KollavarshamMath.truncate(myGlobals.JulianDay + 0.5);
+        myGlobals.julianDay = myCalendar.gregorianDateToJulianDay(gregorianDate);
+        myGlobals.ahar = myCalendar.julianDayToAhargana(myGlobals.julianDay);
+        myGlobals.julianDay = KollavarshamMath.truncate(myGlobals.julianDay + 0.5);
         myGlobals.ahargana = KollavarshamMath.truncate(myGlobals.ahar + 0.5);
-        myGlobals.weekdayName = myCalendar.julianDayToWeekday(myGlobals.JulianDay);
+        myGlobals.weekdayName = myCalendar.julianDayToWeekday(myGlobals.julianDay);
         myGlobals.year = (double) gregorianDate.get(Calendar.YEAR);
         myCelestial.setAyanamsa(myGlobals.ahargana);
 
@@ -112,14 +112,13 @@ public class calculations {
         myGlobals.malayalaNaksatra = myCalendar.getMalayalaNaksatraName(myGlobals.tllong);
 
         // kali and Saka era
-        myGlobals.YearKali = myCalendar.aharganaToKali(myGlobals.ahar + (4 - myGlobals.masaNum) * 30);
-        myGlobals.YearSaka = myCalendar.kaliToSaka(myGlobals.YearKali);
-        myGlobals.YearVikrama = myGlobals.YearSaka + 135;
+        myGlobals.yearKali = myCalendar.aharganaToKali(myGlobals.ahar + (4 - myGlobals.masaNum) * 30);
+        myGlobals.yearSaka = myCalendar.kaliToSaka(myGlobals.yearKali);
+        myGlobals.yearVikrama = myGlobals.yearSaka + 135;
 
         // Sewell p.45 - https://archive.org/stream/indiancalendarwi00sewerich#page/45/mode/1up
-        myGlobals.MalayalamYear = myGlobals.YearSaka - 747 +
+        myGlobals.MalayalamYear = myGlobals.yearSaka - 747 +
                 KollavarshamMath.truncate((myGlobals.sauraMasaNum - myGlobals.malayalaMasaNum + 12) / 12);
-        //myGlobals.MEYear = myGlobals.;
 
         String[] planets = {"mercury", "venus", "mars", "jupiter", "saturn"};
         for (int i = 0; i < planets.length; i++) {

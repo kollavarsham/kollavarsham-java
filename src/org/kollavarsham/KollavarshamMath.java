@@ -1,5 +1,13 @@
 package org.kollavarsham;
 
+/*
+ * kollavarsham
+ * http://kollavarsham.org
+ *
+ * Copyright (c) 2014 The Kollavarsham Team
+ * Licensed under the MIT license.
+ */
+
 import java.lang.Math;
 import java.math.BigDecimal;
 import java.text.NumberFormat;

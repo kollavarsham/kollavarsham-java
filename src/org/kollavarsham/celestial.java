@@ -15,7 +15,6 @@ public class celestial {
 
     Map<String, Double> primaryYugaRotationConstants;
     Map<String, String> planetNames;
-    KollavarshamMath kvmath;
     public Map<String, Double> YugaRotation;
     Map<String, Double> PlanetRotation;
     Map<String, Double> PlanetSighra;
@@ -68,12 +67,11 @@ public class celestial {
         PlanetCircums = new HashMap<String, Double>();
         PlanetMeanPosition = new HashMap<String, Double>();
         PlanetTruePosition = new HashMap<String, Double>();
-        kvmath = new KollavarshamMath();
 
     }
 
     public Double zero360(Double longitude) {
-        Double result = longitude - kvmath.truncate(longitude / 360.0) * 360.0;
+        Double result = longitude - KollavarshamMath.truncate(longitude / 360.0) * 360.0;
         return result < 0 ? 360.0 + result : result;
     }
 
@@ -120,14 +118,14 @@ public class celestial {
 
     public void setSecondaryConstants() {
         // TODO: Add Tests if/when feasible
-        myGlobals.YugaCivilDays = (Double) this.YugaRotation.get("star") -
+        myGlobals.yugaCivilDays = (Double) this.YugaRotation.get("star") -
                 (Double) this.YugaRotation.get("sun");
-        myGlobals.YugaSynodicMonth = (Double) this.YugaRotation.get("moon") -
+        myGlobals.yugaSynodicMonth = (Double) this.YugaRotation.get("moon") -
                 (Double) this.YugaRotation.get("sun");
-        myGlobals.YugaAdhimasa = myGlobals.YugaSynodicMonth -
+        myGlobals.yugaAdhimasa = myGlobals.yugaSynodicMonth -
                 12.0 * (Double) this.YugaRotation.get("sun");
-        myGlobals.YugaTithi = 30.0 * myGlobals.YugaSynodicMonth;
-        myGlobals.YugaKsayadina = myGlobals.YugaTithi - myGlobals.YugaCivilDays;
+        myGlobals.yugaTithi = 30.0 * myGlobals.yugaSynodicMonth;
+        myGlobals.yugaKsayadina = myGlobals.yugaTithi - myGlobals.yugaCivilDays;
     }
 
     public void setPlanetaryConstants() {
@@ -209,14 +207,14 @@ public class celestial {
         // Good reads:
         // https://en.wikipedia.org/wiki/Ayanamsa
         // http://pidaparthypanchangam.com/?m=201306&paged=2
-        Double ayanamsa = (54.0 * 4320000.0 / myGlobals.YugaCivilDays / 3600.0) * (ahargana - 1314930.0);
-        myGlobals.ayanadeg = kvmath.truncate(ayanamsa);
-        myGlobals.ayanamin = 60.0 * kvmath.fractional(ayanamsa);
+        Double ayanamsa = (54.0 * 4320000.0 / myGlobals.yugaCivilDays / 3600.0) * (ahargana - 1314930.0);
+        myGlobals.ayanadeg = KollavarshamMath.truncate(ayanamsa);
+        myGlobals.ayanamin = 60.0 * KollavarshamMath.fractional(ayanamsa);
     }
 
     public Double getMeanLongitude(Double ahargana, Double rotation) {
         // TODO: Add Tests if/when feasible
-        return 360.0 * kvmath.fractional(rotation * ahargana / myGlobals.YugaCivilDays);
+        return 360.0 * KollavarshamMath.fractional(rotation * ahargana / myGlobals.yugaCivilDays);
     }
 
     public Double getTrueLongitude(Double ahargana, Double meanSolarLongitude, String planet) {
@@ -266,11 +264,11 @@ public class celestial {
 
     public Double getSighraEquation(Double anomaly, String planet) {
         Double bhuja, koti, karna;
-        bhuja = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.sin(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
-        koti = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.cos(anomaly / kvmath.radianMultiplier) * kvmath.radianMultiplier;
-        karna = Math.sqrt(kvmath.square(kvmath.radianMultiplier + koti) + kvmath.square(bhuja));
+        bhuja = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.sin(anomaly / KollavarshamMath.radianMultiplier) * KollavarshamMath.radianMultiplier;
+        koti = (Double) this.PlanetCircums.get(planet) / 360.0 * Math.cos(anomaly / KollavarshamMath.radianMultiplier) * KollavarshamMath.radianMultiplier;
+        karna = Math.sqrt(KollavarshamMath.square(KollavarshamMath.radianMultiplier + koti) + KollavarshamMath.square(bhuja));
 
-        return Math.asin(bhuja / karna) * kvmath.radianMultiplier;
+        return Math.asin(bhuja / karna) * KollavarshamMath.radianMultiplier;
     }
 
     //	  getSighraEquation     : function (anomaly, planet) {
@@ -283,8 +281,8 @@ public class celestial {
 //      }
     public Double declination(Double longitude) {
         // https://en.wikipedia.org/wiki/Declination
-        return Math.asin(Math.sin(longitude / kvmath.radianMultiplier) * Math.sin(24.0 / kvmath.radianMultiplier)) *
-                kvmath.radianMultiplier;
+        return Math.asin(Math.sin(longitude / KollavarshamMath.radianMultiplier) * Math.sin(24.0 / KollavarshamMath.radianMultiplier)) *
+                KollavarshamMath.radianMultiplier;
     }
 
     public Double getDaylightEquation(Double year, Double latitude) {
@@ -296,7 +294,7 @@ public class celestial {
         Double sayanaDeclination = this.declination(sayanaMeanSolarLongitude); // See Sewell, p.10
 
         // Equation of day light by Analemma (https://en.wikipedia.org/wiki/Analemma)
-        Double x = Math.tan(latitude / kvmath.radianMultiplier) * Math.tan(sayanaDeclination / kvmath.radianMultiplier);
+        Double x = Math.tan(latitude / KollavarshamMath.radianMultiplier) * Math.tan(sayanaDeclination / KollavarshamMath.radianMultiplier);
 
         return 0.5 * Math.asin(x) / Math.PI;
     }
@@ -304,14 +302,14 @@ public class celestial {
     public void setSunriseTime(Double eqTime) {
         // TODO: Add Tests if/when feasible
         Double sunriseTime = (0.25 - eqTime) * 24.0;
-        myGlobals.sriseh = kvmath.truncate(sunriseTime);
-        myGlobals.srisem = kvmath.truncate(60.0 * kvmath.fractional(sunriseTime));
+        myGlobals.sriseh = KollavarshamMath.truncate(sunriseTime);
+        myGlobals.srisem = KollavarshamMath.truncate(60.0 * KollavarshamMath.fractional(sunriseTime));
     }
 
     public Double getMandaEquation(Double argument, String planet) {
         return Math.asin((Double) this.PlanetCircumm.get(planet) /
-                360.0 * Math.sin(argument / kvmath.radianMultiplier)) *
-                kvmath.radianMultiplier;
+                360.0 * Math.sin(argument / KollavarshamMath.radianMultiplier)) *
+                KollavarshamMath.radianMultiplier;
     }
 
     public Double getTithi(Double tllong, Double tslong) {
@@ -322,19 +320,19 @@ public class celestial {
 
     public void setTithiSet(Double tithi) {
         // TODO: Add Tests if/when feasible
-        myGlobals.tithi_day = kvmath.truncate(tithi) + 1;
-        myGlobals.ftithi = kvmath.fractional(tithi);
+        myGlobals.tithiDay = KollavarshamMath.truncate(tithi) + 1;
+        myGlobals.ftithi = KollavarshamMath.fractional(tithi);
     }
 
     public void setSuklaKrsna() {
         // TODO: Add Tests if/when feasible
-        if (15 < myGlobals.tithi_day) {
-            myGlobals.tithi_day -= 15.0;
+        if (15 < myGlobals.tithiDay) {
+            myGlobals.tithiDay -= 15.0;
             myGlobals.paksa = "Krsnapaksa";
         } else {
             myGlobals.paksa = "Suklapaksa";
         }
-        myGlobals.sukla_krsna = myGlobals.paksa;
+        myGlobals.suklaKrsna = myGlobals.paksa;
     }
 
     public Double getTllong(Double ahar) {
@@ -360,7 +358,7 @@ public class celestial {
     public Double findConj(Double leftX, Double leftY, Double rightX, Double rightY) {
         Double width = (rightX - leftX) / 2;
         Double centreX = (rightX + leftX) / 2;
-        if (width < kvmath.epsilon) {
+        if (width < KollavarshamMath.epsilon) {
             return this.getTslong(centreX);
         } else {
             Double centreY = this.getElong(centreX);
@@ -388,42 +386,33 @@ public class celestial {
     }
 
     public Double getClong(Double ahar, Double tithi) {
-        Double newNew = myGlobals.YugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
+        Double newNew = myGlobals.yugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
         ahar -= tithi * (newNew / 30.0);
 
-        if (Math.abs(ahar - myGlobals.back_clong_ahar) < 1) {
-            return (double) myGlobals.back_clong;
-        } else if (Math.abs(ahar - myGlobals.back_nclong_ahar) < 1) {
-            myGlobals.back_clong_ahar = myGlobals.back_nclong_ahar;
-            myGlobals.back_clong = myGlobals.back_nclong;
-            return (double) myGlobals.back_nclong;
+        if (Math.abs(ahar - myGlobals.backClongAhar) < 1) {
+            return (double) myGlobals.backClong;
+        } else if (Math.abs(ahar - myGlobals.backNclongAhar) < 1) {
+            myGlobals.backClongAhar = myGlobals.backNclongAhar;
+            myGlobals.backClong = myGlobals.backNclong;
+            return (double) myGlobals.backNclong;
         } else {
-            myGlobals.back_clong_ahar = ahar;
-            myGlobals.back_clong = this.getConj(ahar);
-            return (double) myGlobals.back_clong;
+            myGlobals.backClongAhar = ahar;
+            myGlobals.backClong = this.getConj(ahar);
+            return (double) myGlobals.backClong;
         }
     }
 
     public double getNclong(Double ahar, Double tithi) {
-        Double newNew = myGlobals.YugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
+        Double newNew = myGlobals.yugaCivilDays / ((Double) this.YugaRotation.get("moon") - (Double) this.YugaRotation.get("sun"));
         ahar += (30.0 - tithi) * (newNew / 30.0);
 
-        if (Math.abs(ahar - myGlobals.back_nclong_ahar) < 1) {
-            return myGlobals.back_nclong;
+        if (Math.abs(ahar - myGlobals.backNclongAhar) < 1) {
+            return myGlobals.backNclong;
         } else {
-            myGlobals.back_nclong_ahar = ahar;
-            myGlobals.back_nclong = this.getConj(ahar);
-            return myGlobals.back_nclong;
+            myGlobals.backNclongAhar = ahar;
+            myGlobals.backNclong = this.getConj(ahar);
+            return myGlobals.backNclong;
         }
-    }
-
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
     }
 
 }
