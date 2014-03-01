@@ -21,10 +21,11 @@ public class Kollavarsham {
 
     globals myGlobals;
     calculations Calculations;
+    Locations kollavarshamLocations;
 
-    Boolean bija = false;
-    double latitude = 23.2;
-    double longitude = 75.8;
+    Boolean bija;
+    double latitude;
+    double longitude;
 
     String MalayalamNakshatram;
     Double MalayalamYear;
@@ -36,16 +37,26 @@ public class Kollavarsham {
         myGlobals = globals.getInstance();
         Calculations = new calculations();
         modernDate = Calendar.getInstance();
+        kollavarshamLocations = new Locations();
+        //default options
+        this.bija = false;
+        this.latitude = kollavarshamLocations.getLocationCoordinates("Ujjain").getLatitude();
+        this.longitude = kollavarshamLocations.getLocationCoordinates("Ujjain").getLongitude();
+        
     }
 
     public void setModernDate(Calendar modernDate) {
         this.modernDate = modernDate;
     }
 
-    public void setOptions(Boolean bija, Double latitude, Double longitude) {
+    public void setOptions(Boolean bija, String location) {
         this.bija = bija;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latitude = kollavarshamLocations.getLocationCoordinates(location).getLatitude();
+        this.longitude = kollavarshamLocations.getLocationCoordinates(location).getLongitude();
+        if (!location.equals("Ujjain")){
+            myGlobals.setDesantara(this.longitude, 
+            		kollavarshamLocations.getLocationCoordinates("Ujjain").getLongitude());
+        }
     }
 
     public void FromGregorian() {
@@ -77,7 +88,7 @@ public class Kollavarsham {
         Calendar modernDate = Calendar.getInstance();
         modernDate.set(2014, Calendar.MARCH, 2);
         malayalamYear.setModernDate(modernDate);
-        malayalamYear.setOptions(true, 23.2, 75.8);
+        malayalamYear.setOptions(true, "Ujjain");
         malayalamYear.FromGregorian();
         System.out.println("Converted to Malayalam Calendar with the following details:");
         System.out.println("Malayalam Year  :" + malayalamYear.getMalayalamYear());

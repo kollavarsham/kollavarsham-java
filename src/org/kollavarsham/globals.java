@@ -80,5 +80,9 @@ public class globals {
         }
         return instance;
     }
+    
+    public void setDesantara(Double longitude, Double ujjainLongitude) {
+        this.desantara = (longitude - ujjainLongitude) / 360;
+    }
 
 }
